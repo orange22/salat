@@ -52,58 +52,7 @@ abstract class FrontController extends CController
     public function init()
     {
         parent::init();
-	    Yii::import('ext.Paging');
-    	$this->og_title=$this->seo_title=Option::getOpt('seotitle');
-		$this->og_description=$this->seo_description=Option::getOpt('seodescription');
-		$this->og_image=$this->seo_image=Option::getOpt('seoimage');
-		$this->seo_keywords=Option::getOpt('seokeywords');
-		$this->cart = $this->getCart();
-
-        /*if(Yii::app()->detectMobileBrowser->showMobile){
-            $this->povar_newyear=1;
-            $this->povar_newyear = Yii::app()->request->cookies['povar_newyear'];
-            if(!$this->povar_newyear){
-                $cookie = new CHttpCookie('povar_newyear', 1);
-                $cookie->expire = time()+60*60*24*3;
-                Yii::app()->request->cookies['povar_newyear'] = $cookie;
-            }
-        }else{*/
-            //$this->povar_newyear = Yii::app()->session['povar_newyear2'];
-            //if(!$this->povar_newyear)
-                //Yii::app()->session['povar_newyear2'] = 1;
-       // }
-        //if($_SERVER['REMOTE_ADDR']=='91.209.51.157'){
-            //echo Yii::app()->request->cookies['current_popup'];
-        /*$this->current_popup=0;
-        $this->current_popup = Yii::app()->request->cookies['current_popup'];
-        if((string)$this->current_popup<3 && !Yii::app()->detectMobileBrowser->showMobile){
-            if(!Yii::app()->session['current_popup_sess']){
-                Yii::app()->request->cookies['current_popup'] = new CHttpCookie('current_popup', (string)$this->current_popup+1);
-                Yii::app()->session['current_popup_sess']=1;
-                $this->display_popup=1;
-            }
-        }*/
-            //unset(Yii::app()->session['current_popup_sess']);
-            //unset(Yii::app()->request->cookies['current_popup']);
-
-        //}
-        if(!Yii::app()->session['closed_popup']){
-            Yii::app()->session['closed_popup']=1;
-            $this->display_closed_popup=1;
-        }else{
-            $this->display_closed_popup=0;
-        }
-
-
-        //unset(Yii::app()->request->cookies['povar_newyear']);
-        $this->tdishes=Dishtype::model()->getTopDishes();
-
-        //$this->tdishes=Dishtype::model()->sort('t.sort ASC')->active()->with(array('dishtypeimage','dishes'=>array('select'=>false,'joinType'=>'INNER JOIN')))->limit(6,0)->findAll();
-
-        if(isset($this->tdishes['types'][0])){
-			$this->firstcategory_id=$this->tdishes['types'][0]['id'];
-		}	
-        $this->setModelName(ucfirst($this->getId()));
+	    $this->setModelName(ucfirst($this->getId()));
     }
 
     /**
