@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +76,7 @@
                 <div class="weight">300г</div>
             </div>
             <div class="info">
-                <div class="name">Цезарь с курицей </div>
+                <div class="name">Цезарь с курицей </div>
                 <p>Салата Ромэн, помидоры черри, перепелиные яйца, куриная грудка, соус</p>
             </div>
         </div>
@@ -131,7 +130,7 @@
                 <div class="weight">300г</div>
             </div>
             <div class="info">
-                <div class="name">Томатный суп с мидиями </div>
+                <div class="name">Томатный суп с мидиями </div>
                 <p>Салата Ромэн, помидоры черри, перепелиные яйца, куриная грудка, соус</p>
             </div>
         </div>
@@ -159,7 +158,7 @@
             <ul class="slide-list">
                 <li class="slide">
                     <div class="item">
-                        <div class="img-holder"><img src="images/img03.jpg" width="147" height="600" alt="image description" /></div>
+                        <div class="img-holder"><img src="images/img08.jpg" alt="image description" /></div>
                         <div class="description">
                             <div class="price-col">
                                 <div class="price">50<span>грн</span></div>
@@ -193,7 +192,7 @@
                             <div class="weight">300г</div>
                         </div>
                         <div class="info">
-                            <div class="name">Цезарь с курицей </div>
+                            <div class="name">Цезарь с курицей </div>
                             <p>Салата Ромэн, помидоры черри, перепелиные яйца, куриная грудка, соус</p>
                         </div>
                     </div>
@@ -257,7 +256,7 @@
                             <div class="weight">300г</div>
                         </div>
                         <div class="info">
-                            <div class="name">Цезарь с курицей </div>
+                            <div class="name">Цезарь с курицей </div>
                             <p>Салата Ромэн, помидоры черри, перепелиные яйца, куриная грудка, соус</p>
                         </div>
                     </div>

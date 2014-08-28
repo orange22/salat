@@ -195,7 +195,7 @@ class User extends BaseActiveRecord
      * @param array $filterKeys
      * @return array
      */
-    public function listData($filterKeys = array())
+    public function listData($filterKeys = array(), $sort = 'title')
     {
         $data = $this;
         if($filterKeys)

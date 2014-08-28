@@ -95,7 +95,7 @@ $config = array(
 
     'params' => array(
         // relative to Yii::app()->basePath/..
-        'webRoot' => 'lpovar.com.ua',
+        'webRoot' => 'public_html',
         'adminEmail' => 'info@lpovar.com.ua',
         'cacheDuration' => 3600,
         'uploadUrl' => 'upload',
