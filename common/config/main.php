@@ -13,6 +13,7 @@ $config = array(
         'common.components.*',
         'common.modules.rights.*',
         'common.modules.rights.components.*',
+        'common.extensions.transliteration.*',
         'common.extensions.yii-eauth.*',
         'common.extensions.yii-eauth.lib.*',
         'common.extensions.lightopenid.*',

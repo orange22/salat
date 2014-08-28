@@ -16,32 +16,14 @@ abstract class FrontController extends CController
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
      */
     public $layout = '//layouts/main';
-    /**
-     * @var array context menu items. This property will be assigned to {@link CMenu::items}.
-     */
-    public $menu = array();
+
+    public $categories = array();
     /**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
      * for more details on how to specify this property.
      */
-    public $breadcrumbs = array();
-	public $cart = array();
-	public $og_title;
-	public $og_description;
-	public $og_image;
-	
-	public $seo_title;
-	public $seo_description;
-	public $seo_image;
-	public $seo_keywords;
-	public $dishtype_id;
-	public $firstcategory_id;
-	public $tdishes;
-    public $povar_newyear;
-    public $current_popup;
-    public $display_popup;
-    public $display_closed_popup;
+
     /**
      * Model name
      *
@@ -52,6 +34,9 @@ abstract class FrontController extends CController
     public function init()
     {
         parent::init();
+
+        $this->categories=Category::model()->findAll();
+
 	    $this->setModelName(ucfirst($this->getId()));
     }
 

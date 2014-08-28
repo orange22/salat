@@ -10,7 +10,7 @@ class SiteController extends FrontController
 	
 	public function actionIndex()
 	{
-        $this->render('index');
+        $this->render('index',array('categories'=>$this->categories));
 	}
 	/**
 	 * This is the action to handle external exceptions.
