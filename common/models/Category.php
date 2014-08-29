@@ -48,9 +48,9 @@ class Category extends BaseActiveRecord
         return array_merge(parent::rules(), array(
             array('title', 'required'),
             array('sort, status', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 255),
+            array('title, code', 'length', 'max' => 255),
         
-            array('id, title, sort, status', 'safe', 'on' => 'search'),
+            array('id, title, sort, status, code', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -74,6 +74,7 @@ class Category extends BaseActiveRecord
             'title' => Yii::t('backend', 'Title'),
             'sort' => Yii::t('backend', 'Sort'),
             'status' => Yii::t('backend', 'Status'),
+            'status' => Yii::t('backend', 'Code'),
         );
     }
 
@@ -89,7 +90,12 @@ class Category extends BaseActiveRecord
 		$criteria->compare('t.title',$this->title,true);
 		$criteria->compare('t.sort',$this->sort);
 		$criteria->compare('t.status',$this->status);
+        $criteria->compare('t.code',$this->code);
 
         return parent::searchInit($criteria);
+    }
+    public function beforeSave() {
+        $this->code=str_replace(' ','_',strtolower(Transliteration::text($this->title)));
+        return parent::beforeSave();
     }
 }

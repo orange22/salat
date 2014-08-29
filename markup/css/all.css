@@ -209,6 +209,20 @@ dialog {
 }
 .item-box .img-holder{
 	text-align: center;
+	height: 600px;
+	position: relative;
+}
+.item-box.big .slide,
+.item-box.big .img-holder{
+	height: 640px;
+}
+.item-box .img-holder img{
+	position: absolute;
+	margin: 0 auto;
+	bottom: 120px;
+	text-align: center;
+	left: 0;
+	right: 0;
 }
 .item-box .price-col {
 	float: left;
@@ -520,7 +534,7 @@ dialog {
 .order-box {
 	position: relative;
 	padding: 0 171px 0 0;
-	margin: 60px 0 0;
+	margin: 9px 0 0;
 }
 .order-box .total-box {
 	position: absolute;
@@ -557,22 +571,22 @@ dialog {
 .order-list:before {
 	content: '';
 	position: absolute;
-	top: 82px;
-	bottom: 98px;
+	top: 117px;
+	bottom: 143px;
 	right: 0;
 	border-right: 1px dashed #b7b7b7;
 }
 .order-list li {
 	position: relative;
 	overflow: hidden;
-	margin: 0 0 19px;
+	margin: 0 0 11px;
 }
 .order-list li:before{
 	content: '';
 	background: url(../images/deco02.png) repeat-x 345px 50%;
 	position: absolute;
 	top: 50%;
-	left: 345px;
+	left: 394px;
 	right: 0;
 	z-index: -1;
 	height: 1px;
@@ -604,7 +618,7 @@ dialog {
 }
 .order-list .img-holder{
 	float: left;
-	width: 162px;
+	width: 213px;
 }
 .order-list .description {
 	float: left;
@@ -615,7 +629,7 @@ dialog {
 	padding: 9px 18px;
 	line-height: 28px;
 	position: relative;
-	margin: 43px 0 0;
+	margin: 78px 0 0;
 	width: 143px;
 }
 .order-list .description .cancel {
@@ -636,7 +650,7 @@ dialog {
 	background: #fff;
 	background:#fff url(../images/deco03.png) no-repeat;
 	text-align: center;
-	margin: 42px 0 0 85px;
+	margin: 78px 0 0 65px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;

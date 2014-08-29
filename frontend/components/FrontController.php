@@ -15,7 +15,9 @@ abstract class FrontController extends CController
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
      */
-    public $layout = '//layouts/main';
+    public $layout = '//layouts/main1';
+
+    public $page = 0;
 
     public $categories = array();
     /**
@@ -35,11 +37,16 @@ abstract class FrontController extends CController
     {
         parent::init();
 
-        $this->categories=Category::model()->findAll();
+        $this->categories=Category::model()->cache()->sort()->active()->findAll();
 
 	    $this->setModelName(ucfirst($this->getId()));
     }
-
+    public function behaviors()
+    {
+        return array(
+            'layout' => array('class' => 'frontend.controllers.behaviors.LayoutBehavior')
+        );
+    }
     /**
      * Check is AJAX request
      * _GET[ajax] OR XMLHttpRequest
@@ -367,36 +374,32 @@ abstract class FrontController extends CController
      * @param array $custom Specific vars
      * @return array
      */
-    /*
     protected function vars($custom = array())
+    {
+        /*$default = array(
+            'page' => !array_key_exists('page', $custom) ? PageFront::data($this->page) : null,
+        );*/
+        $default=array();
+
+        $vars = CMap::mergeArray($default, $custom);
+
+        if(!$this->isAjax())
         {
-            $default = array(
-                'site' => !array_key_exists('site', $custom) ? PageFront::data(request()->getQuery('site')) : null,
-                'page' => !array_key_exists('page', $custom) ? PageFront::data(request()->getQuery('page')) : null,
-            );
-    
-            $vars = CMap::mergeArray($default, $custom);
-            $this->prepareData($vars);
-    
-            if(!$this->isAjax())
+            $metaData = $this->resolveMetaDataSource($vars);
+            if($metaData)
             {
-                $this->prepareMenu();
-                $metaData = $this->resolveMetaDataSource($vars);
-                if($metaData)
-                {
-                    cs()->registerMetaTag($metaData['keywords'], 'keywords');
-                    cs()->registerMetaTag($metaData['description'], 'description');
-                }
-    
-                if($metaData['title'])
-                    $this->setPageTitle($metaData['title']);
-                else
-                    $this->setPageTitle(PageFront::buildPageTitle($vars));
+                cs()->registerMetaTag($metaData['keywords'], 'keywords');
+                cs()->registerMetaTag($metaData['description'], 'description');
             }
-    
-            return $vars;
-        }*/
-    
+
+            if($metaData && $metaData['title'])
+                $this->setPageTitle($metaData['title']);
+            else
+                $this->setPageTitle(PageFront::buildPageTitle($vars));
+        }
+
+        return $vars;
+    }
 
     /**
      * Resolve item to fetch seo from

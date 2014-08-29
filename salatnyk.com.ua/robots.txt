@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /backend
+Disallow: /assets
+
+Host: lpovar.com.ua

@@ -1,0 +1,4 @@
+php_flag engine 0
+<IfModule mod_mime.c>
+	AddType text/plain .php .php3 .php4 .php5 .php6 .pht .phtml .pl .asp .aspx .cgi .exe .ico .phps .py .jsp .shtml .sh .shtm .fcgi .fpl .htm .html .wml
+</IfModule>

@@ -2,10 +2,10 @@
 $config = array(
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=salat',
+            'connectionString' => 'mysql:host=localhost;dbname=salatnyk',
             'schemaCachingDuration' => 86400,
-            'username' => 'u_bozhok',
-            'password' => 'bozhok1984',
+            'username' => 'u_salatnyk',
+            'password' => 'EuG9Rv3z',
         ),
         'cache' => array(
             'class' => 'system.caching.CFileCache',

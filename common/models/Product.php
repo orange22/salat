@@ -67,7 +67,7 @@ class Product extends BaseActiveRecord
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('title, category_id, date_create', 'required'),
+            array('title, category_id', 'required'),
             array('category_id, weight, sort, status', 'numerical', 'integerOnly' => true),
             array('price', 'numerical'),
             array('title', 'length', 'max' => 255),
@@ -75,7 +75,7 @@ class Product extends BaseActiveRecord
             array('image_id', 'file', 'types' => File::getAllowedExtensions(), 'allowEmpty' => true, 'on' => 'upload'),
             array('category_id', 'exist', 'className' => 'Category', 'attributeName' => 'id'),
         
-            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status', 'safe', 'on' => 'search'),
+            array('id, title, category_id, image_id, detail_text, price, weight, sort, status', 'safe', 'on' => 'search'),
         ));
     }
 

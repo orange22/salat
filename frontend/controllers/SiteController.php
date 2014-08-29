@@ -2,19 +2,10 @@
 
 class SiteController extends FrontController
 {
-    public function init()
-    {
-       parent::init();
-       Yii::import('common.extensions.yii-mail.*');
-    }
-	
-	public function actionIndex()
+    public function actionIndex()
 	{
-        $this->render('index',array('categories'=>$this->categories));
+        $this->render('index',array());
 	}
-	/**
-	 * This is the action to handle external exceptions.
-	 */
 	public function actionError()
 	{
 		if($error=Yii::app()->errorHandler->error)

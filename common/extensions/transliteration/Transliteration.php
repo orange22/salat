@@ -51,6 +51,7 @@ class Transliteration
 		// ASCII is always valid NFC! If we're only ever given plain ASCII, we can
 		// avoid the overhead of initializing the decomposition tables by skipping
 		// out early.
+        $string = str_replace(' ', '_', $string);
 		if (!preg_match('/[\x80-\xff]/', $string)) {
 			return $string;
 		}

@@ -1,0 +1,18 @@
+{{ void(App.getClientScript.registerPackage('base'))|raw }}
+<!DOCTYPE html>
+<html lang="{{ App.language }}">
+<head>
+    <base href="{{ App.params.siteUrl }}/" />
+    <meta charset="utf-8">
+    <title>{% block title %}{{ this.pageTitle|raw }}{% endblock %}</title>
+    <!--[if lte IE 8]><script type="text/javascript" src="js/ie.js"></script><![endif]-->
+    {% block ieTags %}{% endblock %}
+    <link href="favicon.png" rel="icon" type="image/png" />
+    <link href="favicon.png" rel="shortcut icon" type="image/png" />
+</head>
+
+<body>
+{% block wrapper %}{% endblock %}
+{{ this.data['ga']|raw }}
+</body>
+</html>
