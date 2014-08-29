@@ -5,6 +5,7 @@
  * The followings are the available columns in table '{{category}}':
  * @property integer $id
  * @property string $title
+ * @property string $code
  * @property integer $sort
  * @property integer $status
  *
@@ -17,7 +18,7 @@
  * @method Category sort($columns = '')
  *
  * The followings are the available model relations:
- * @property Product[] $products
+ * @property Prod[] $prods
  */
 class Category extends BaseActiveRecord
 {
@@ -50,7 +51,7 @@ class Category extends BaseActiveRecord
             array('sort, status', 'numerical', 'integerOnly' => true),
             array('title, code', 'length', 'max' => 255),
         
-            array('id, title, sort, status, code', 'safe', 'on' => 'search'),
+            array('id, title, code, sort, status', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -60,7 +61,7 @@ class Category extends BaseActiveRecord
     public function relations()
     {
         return array(
-            'products' => array(self::HAS_MANY, 'Product', 'category_id'),
+            'products' => array(self::HAS_MANY, 'Prod', 'category_id'),
         );
     }
 
@@ -72,9 +73,9 @@ class Category extends BaseActiveRecord
         return array(
             'id' => 'ID',
             'title' => Yii::t('backend', 'Title'),
+            'code' => Yii::t('backend', 'Code'),
             'sort' => Yii::t('backend', 'Sort'),
             'status' => Yii::t('backend', 'Status'),
-            'status' => Yii::t('backend', 'Code'),
         );
     }
 
@@ -88,14 +89,10 @@ class Category extends BaseActiveRecord
 
         		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.title',$this->title,true);
+		$criteria->compare('t.code',$this->code,true);
 		$criteria->compare('t.sort',$this->sort);
 		$criteria->compare('t.status',$this->status);
-        $criteria->compare('t.code',$this->code);
 
         return parent::searchInit($criteria);
-    }
-    public function beforeSave() {
-        $this->code=str_replace(' ','_',strtolower(Transliteration::text($this->title)));
-        return parent::beforeSave();
     }
 }

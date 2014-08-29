@@ -37,7 +37,7 @@ abstract class FrontController extends CController
     {
         parent::init();
 
-        $this->categories=Category::model()->cache()->sort()->active()->findAll();
+        $this->categories=Category::model()->sort()->active()->findAll();
 
 	    $this->setModelName(ucfirst($this->getId()));
     }

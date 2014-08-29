@@ -1,12 +1,12 @@
 <?php
-/** @var $this DishtypeController */
-/** @var $model Dishtype */
-/** @var $models Dishtype[] */
+/** @var $this ProducttypeController */
+/** @var $model Producttype */
+/** @var $models Producttype[] */
 ?>
 <?php
 $this->pageTitle = Yii::t('backend', 'Clone "{title}"', array('{title}' => $model->getDisplayTitle()));
 $this->breadcrumbs = array(
-	Yii::t('backend', 'Dishtypes') => array('admin'),
+	Yii::t('backend', 'Producttypes') => array('admin'),
 	Yii::t('backend', 'Clone'),
 );
 ?>

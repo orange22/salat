@@ -35,16 +35,16 @@ $cs->registerCssFile($baseUrl.'/backend/css/main.css?v=1', 'screen');
                 'class' => 'TbMenu',
                 'items' => array(
 
-                    array('label' => Yii::t('backend', 'Category'),
+                    array('label' => Yii::t('backend', 'Categories'),
                         'url' => array('/category'),
                         'visible' => user()->checkAccess('Category.*'),
                         'active' => $this->getId() === 'category',
                     ),
 
                     array('label' => Yii::t('backend', 'Products'),
-                        'url' => array('/product'),
+                        'url' => array('/prod'),
                         'visible' => user()->checkAccess('Product.*'),
-                        'active' => $this->getId() === 'product',
+                        'active' => $this->getId() === 'prod',
                     ),
 
                     array('label' => Yii::t('backend', 'Options'),

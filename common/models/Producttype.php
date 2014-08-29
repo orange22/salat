@@ -1,47 +1,29 @@
 <?php
 /**
- * This is the model class for table "{{dishtype}}".
+ * This is the model class for table "{{producttype}}".
  *
- * The followings are the available columns in table '{{dishtype}}':
+ * The followings are the available columns in table '{{producttype}}':
  * @property integer $id
  * @property string $title
- * @property integer $image_id
- * @property integer $status
+ * @property string $code
  * @property integer $sort
+ * @property integer $status
  *
- * @method Dishtype active
- * @method Dishtype cache($duration = null, $dependency = null, $queryCount = 1)
- * @method Dishtype indexed($column = 'id')
- * @method Dishtype language($lang = null)
- * @method Dishtype select($columns = '*')
- * @method Dishtype limit($limit, $offset = 0)
- * @method Dishtype sort($columns = '')
- *
- * The followings are the available model relations:
- * @property File $image
+ * @method Producttype active
+ * @method Producttype cache($duration = null, $dependency = null, $queryCount = 1)
+ * @method Producttype indexed($column = 'id')
+ * @method Producttype language($lang = null)
+ * @method Producttype select($columns = '*')
+ * @method Producttype limit($limit, $offset = 0)
+ * @method Producttype sort($columns = '')
  */
 class Producttype extends BaseActiveRecord
 {
-    public function behaviors()
-    {
-        return array(
-        	'e' => array('class' => 'common.models.Entity'),
-        	'seo' => array('class' => 'common.components.SeoBehavior'),
-            'attach' => array(
-                'class' => 'common.components.FileAttachBehavior',
-                'imageAttributes' => array(
-                    'image_id','image2_id'
-                ),
-                'fileAttributes' => array(
-                ),
-            )
-        );
-    }
 
     /**
      * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-     * @return Dishtype the static model class
+     * @return Producttype the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -53,7 +35,7 @@ class Producttype extends BaseActiveRecord
      */
     public function tableName()
     {
-        return '{{dishtype}}';
+        return '{{producttype}}';
     }
 
     /**
@@ -62,12 +44,11 @@ class Producttype extends BaseActiveRecord
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('status, sort', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 255),
-            array('dpid,image_id,image2_id,detail_text', 'safe'),
-            array('image_id,image2_id', 'file', 'types' => File::getAllowedExtensions(), 'allowEmpty' => true, 'on' => 'upload'),
+            array('title', 'required'),
+            array('sort, status', 'numerical', 'integerOnly' => true),
+            array('title, code', 'length', 'max' => 255),
         
-            array('dpid, id, title, detail_text, image_id, image2_id, status, sort', 'safe', 'on' => 'search'),
+            array('id, title, code, sort, status', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -77,11 +58,7 @@ class Producttype extends BaseActiveRecord
     public function relations()
     {
         return array(
-            'dishtypeimage' => array(self::BELONGS_TO, 'File', 'image_id'),
-            'dishtypeimage2' => array(self::BELONGS_TO, 'File', 'image2_id'),
-            'coursetypeimage' => array(self::BELONGS_TO, 'File', 'image_id'),
-            'dishCount' => array(self::STAT, 'Dish','dishtype_id'),
-            'dishes' => array(self::HAS_MANY, 'Dish','dishtype_id'),
+            'products' => array(self::HAS_MANY, 'Prod', 'id'),
         );
     }
 
@@ -92,13 +69,10 @@ class Producttype extends BaseActiveRecord
     {
         return array(
             'id' => 'ID',
-            'dpid' => 'PID',
             'title' => Yii::t('backend', 'Title'),
-            'image_id' => Yii::t('backend', 'Image'),
-            'image2_id' => Yii::t('backend', 'Image'),
-            'status' => Yii::t('backend', 'Status'),
+            'code' => Yii::t('backend', 'Code'),
             'sort' => Yii::t('backend', 'Sort'),
-            'detail_text' => Yii::t('backend', 'Detail Text'),
+            'status' => Yii::t('backend', 'Status'),
         );
     }
 
@@ -109,14 +83,17 @@ class Producttype extends BaseActiveRecord
     public function search()
     {
         $criteria = new CDbCriteria;
-        $criteria->compare('t.id',$this->id);
+
+        		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.title',$this->title,true);
-		$criteria->compare('t.image_id',$this->image_id);
-		$criteria->compare('t.image2_id',$this->image2_id);
-        $criteria->compare('t.dpid',18);
-		$criteria->compare('t.status',$this->status);
-        $criteria->compare('t.detail_text',$this->detail_text);
+		$criteria->compare('t.code',$this->code,true);
 		$criteria->compare('t.sort',$this->sort);
+		$criteria->compare('t.status',$this->status);
+
         return parent::searchInit($criteria);
+    }
+    public function beforeSave() {
+        $this->code=str_replace(' ','_',strtolower(Transliteration::text($this->title)));
+        return parent::beforeSave();
     }
 }

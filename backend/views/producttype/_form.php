@@ -1,32 +1,26 @@
 <?php
-/** @var $this DishController */
-/** @var $model Dish */
-/** @var $models Dish[] */
-/** @var $languages array */
+/** @var $this ProducttypeController */
+/** @var $model Producttype */
+/** @var $models Producttype[] */
+/** @var $form ActiveForm */
 ?>
-<ul id="form" class="nav nav-pills">
-    <li class="active"><a href="#form-description" data-toggle="pill"><?php echo Yii::t('backend', 'Description'); ?></a></li>
-    <?php if($model->getIsNewRecord()) { ?>
-        <li class="disabled">
-            <a href="#" title="<?php echo Yii::t('backend', 'Save page first'); ?>"
-               rel="tooltip"><?php echo Yii::t('backend', 'Meta tags'); ?></a>
-        </li>
-    <?php } else { ?>
-        <li><a href="#form-seo" data-toggle="pill"><?php echo Yii::t('backend', 'Meta tags'); ?></a></li>
-    <?php } ?>
-</ul>
-<div class="tab-content">
-    <div id="form-description" class="tab-pane fade in active">
-        <?php $this->renderPartial('_form_description', array(
-            'model' => $model,
-            'legend' => $legend,
-        )); ?>
-    </div>
-    <div id="form-seo" class="tab-pane fade">
-        <?php if(!$model->getIsNewRecord()) { ?>
-            <?php $this->renderPartial('//inc/_form_seo', array(
-                'model' => $model,
-            )); ?>
-        <?php } ?>
-    </div>
-</div>
+
+<?php $form = $this->beginWidget('backend.components.ActiveForm', array(
+    'model' => $model,
+    'fieldsetLegend' => $legend,
+    'htmlOptions' => array(
+        'enctype' => 'multipart/form-data',
+    ),
+    'enableAjaxValidation' => true,
+    'clientOptions' => array(
+        'validateOnSubmit' => true,
+        'afterValidate' => 'js:formAfterValidate',
+    ),
+)); ?>
+
+    <?php echo $form->textFieldRow($model, 'title', array('class' => 'span9', 'maxlength' => 255)); ?>
+    <?php echo $form->textFieldRow($model, 'code', array('class' => 'span9', 'maxlength' => 255)); ?>
+    <?php echo $form->textFieldRow($model, 'sort', array('class' => 'span2')); ?>
+    <?php echo $form->checkBoxRow($model, 'status'); ?>
+
+<?php $this->endWidget(); ?>

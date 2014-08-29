@@ -1,8 +1,8 @@
 <?php
 /**
- * This is the model class for table "{{product}}".
+ * This is the model class for table "{{prod}}".
  *
- * The followings are the available columns in table '{{product}}':
+ * The followings are the available columns in table '{{prod}}':
  * @property integer $id
  * @property string $title
  * @property integer $category_id
@@ -14,13 +14,13 @@
  * @property integer $sort
  * @property integer $status
  *
- * @method Product active
- * @method Product cache($duration = null, $dependency = null, $queryCount = 1)
- * @method Product indexed($column = 'id')
- * @method Product language($lang = null)
- * @method Product select($columns = '*')
- * @method Product limit($limit, $offset = 0)
- * @method Product sort($columns = '')
+ * @method Prod active
+ * @method Prod cache($duration = null, $dependency = null, $queryCount = 1)
+ * @method Prod indexed($column = 'id')
+ * @method Prod language($lang = null)
+ * @method Prod select($columns = '*')
+ * @method Prod limit($limit, $offset = 0)
+ * @method Prod sort($columns = '')
  *
  * The followings are the available model relations:
  * @property Category $category
@@ -46,7 +46,7 @@ class Product extends BaseActiveRecord
     /**
      * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-     * @return Product the static model class
+     * @return Prod the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -67,15 +67,15 @@ class Product extends BaseActiveRecord
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('title, category_id', 'required'),
+            array('title', 'required'),
             array('category_id, weight, sort, status', 'numerical', 'integerOnly' => true),
             array('price', 'numerical'),
             array('title', 'length', 'max' => 255),
-            array('image_id, detail_text', 'safe'),
+            array('image_id, detail_text, date_create', 'safe'),
             array('image_id', 'file', 'types' => File::getAllowedExtensions(), 'allowEmpty' => true, 'on' => 'upload'),
             array('category_id', 'exist', 'className' => 'Category', 'attributeName' => 'id'),
         
-            array('id, title, category_id, image_id, detail_text, price, weight, sort, status', 'safe', 'on' => 'search'),
+            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status', 'safe', 'on' => 'search'),
         ));
     }
 

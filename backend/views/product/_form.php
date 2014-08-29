@@ -19,11 +19,12 @@
 )); ?>
 
     <?php echo $form->textFieldRow($model, 'title', array('class' => 'span9', 'maxlength' => 255)); ?>
-    <?php echo $form->dropDownListRow($model, 'category_id', Category::model()->cache()->sort()->listData()); ?>
+    <?php echo $form->dropDownListRow($model, 'category_id', Category::model()->sort()->active()->listData()); ?>
     <?php echo $form->fileUploadRow($model, 'image_id', 'image'); ?>
     <?php echo $form->textAreaRow($model, 'detail_text', array('rows' => 5, 'cols' => 50, 'class' => 'span9')); ?>
     <?php echo $form->textFieldRow($model, 'price', array('class' => 'span9')); ?>
     <?php echo $form->textFieldRow($model, 'weight', array('class' => 'span9')); ?>
+
     <?php echo $form->textFieldRow($model, 'sort', array('class' => 'span2')); ?>
     <?php echo $form->checkBoxRow($model, 'status'); ?>
 

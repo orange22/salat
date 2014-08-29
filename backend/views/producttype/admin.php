@@ -1,12 +1,12 @@
 <?php
-/** @var $this DishtypeController */
-/** @var $model Dishtype */
+/** @var $this ProducttypeController */
+/** @var $model Producttype */
 /** @var $form CActiveForm */
 ?>
 <?php
 $this->pageTitle = Yii::t('backend', 'Manage');
 $this->breadcrumbs = array(
-	Yii::t('backend', 'Dishtypes') => array('admin'),
+	Yii::t('backend', 'Producttypes') => array('admin'),
 	Yii::t('backend', 'Manage'),
 );
 ?>
@@ -23,15 +23,9 @@ $this->breadcrumbs = array(
         'columns' => array(
             'id',
             'title',
-           /*
-            array(
-                           'name' => 'image_id',
-                           'value' => '$data->image ? $data->image->title : null',
-                           'filter' => CHtml::listData(Image::model()->findAll(), 'id', 'title'),
-                       ),*/
-           
-            'status',
+            'code',
             'sort',
+            'status',
         ),
     )); ?>
 
