@@ -4,6 +4,7 @@ class CategoryController extends FrontController
 {
     public function actionIndex($category)
 	{
-        $this->render('index',array());
+        $products=Prod::model()->cache()->with('category')->active()->sort()->findAll('category.code="'.$category.'"');
+        $this->render('index',array('products'=>$products));
 	}
 }
