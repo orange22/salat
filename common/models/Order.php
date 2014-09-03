@@ -39,13 +39,13 @@ class Order extends BaseActiveRecord
      * @param string $className active record class name.
      * @return Order the static model class
      */
-    public $dish_count;
+    public $product_count;
     public $drink_count;
     public $order_count;
     public $delivery;
     public $date_first;
     public $date_last;
-    public $dishlist;
+    public $productlist;
     public $drinklist;
     public $pdf;
     
@@ -72,14 +72,14 @@ class Order extends BaseActiveRecord
             array('user_id, selfdeliver, paytype_id, discount_id, status, sort, orderstate_id, mail_open', 'numerical', 'integerOnly' => true),
             array('name, title, camefrom', 'length', 'max' => 255),
             array('phone, delivery_from, delivery_till', 'length', 'max' => 55),
-            array('delivery_addr, deliveryplace_id, date_create, dishes, dish_count, dishlist, drinklist', 'safe'),
+            array('delivery_addr, deliveryplace_id, date_create, dishes, product_count, productlist, drinklist', 'safe'),
             array('user_id', 'exist', 'className' => 'User', 'attributeName' => 'id'),
             array('paytype_id', 'exist', 'className' => 'Paytype', 'attributeName' => 'id'),
             array('discount_id', 'exist', 'className' => 'Discount', 'attributeName' => 'id'),
             array('discount_id', 'exist', 'className' => 'Discount', 'attributeName' => 'id'),
             array('deliveryplace_id', 'exist', 'className' => 'Deliveryplace', 'attributeName' => 'id'),
             
-            array('id, user_id, deliveryplace_id, drinklist, camefrom, paytype_id, name, title, phone, date_create, discount_id, selfdeliver, status, sort, orderstate_id, total, dishes, dish_count, drink_count, order_count, date_first, date_last', 'safe', 'on' => 'search'),
+            array('id, user_id, deliveryplace_id, drinklist, camefrom, paytype_id, name, title, phone, date_create, discount_id, selfdeliver, status, sort, orderstate_id, total, dishes, product_count, drink_count, order_count, date_first, date_last', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -94,11 +94,11 @@ class Order extends BaseActiveRecord
             'orderstate' => array(self::BELONGS_TO, 'Orderstate', 'orderstate_id'),
             'deliveryplace' => array(self::BELONGS_TO, 'Deliveryplace', 'deliveryplace_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'orderDishes' => array(self::HAS_MANY, 'OrderDish', 'order_id'),
-            //'dish_count' => array(self::STAT, 'OrderDish', 'order_id'),
+            'orderProducts' => array(self::HAS_MANY, 'OrderProduct', 'order_id'),
+            'product_count' => array(self::STAT, 'OrderProduct', 'order_id'),
             'orderDrinks' => array(self::HAS_MANY, 'OrderDrink', 'order_id'),
             'orderCharities' => array(self::HAS_MANY, 'CharityOrder', 'order_id'),
-            //'orderDrinksCount' => array(self::STAT, 'OrderDrink', 'order_id'),
+            'orderDrinksCount' => array(self::STAT, 'OrderDrink', 'order_id'),
             //'orderOrders' => array(self::HAS_MANY, 'Order', 'user_id'),
         );
     }
@@ -126,9 +126,9 @@ class Order extends BaseActiveRecord
             'orderstate_id' => Yii::t('backend', 'Orderstate'),
             'total' => Yii::t('backend', 'Total'),
             'order_count' => Yii::t('backend', 'Orders'),
-            'dish_count' => Yii::t('backend', 'Dishes'),
+            'product_count' => Yii::t('backend', 'Productlist'),
             'drink_count' => Yii::t('backend', 'Drinks'),
-            'dishlist' => Yii::t('backend', 'Dishlist'),
+            'productlist' => Yii::t('backend', 'Productlist'),
             'drinklist' => Yii::t('backend', 'Drinks'),
             'camefrom' => Yii::t('backend', 'Came from'),
             'selfdeliver' => Yii::t('backend', 'Self deliver'),
@@ -150,9 +150,9 @@ class Order extends BaseActiveRecord
         $criteria = new CDbCriteria;
             
         #count_dishes
-        $dish_table = OrderDish::model()->tableName();
-        $dish_count_sql = "(select ifnull(sum(pt.quantity),0) from `".$dish_table."` as pt where pt.order_id = t.id)";
-        
+        $product_table = OrderProduct::model()->tableName();
+        $product_count_sql = "(select ifnull(sum(pt.quantity),0) from `".$product_table."` as pt where pt.order_id = t.id)";
+
         #count_drinks
         $drink_table = OrderDrink::model()->tableName();
         $drink_count_sql = "(select ifnull(sum(pt2.quantity),0) from `".$drink_table."` as pt2 where pt2.order_id = t.id)";
@@ -161,8 +161,8 @@ class Order extends BaseActiveRecord
         $order_table = Order::model()->tableName();
         $order_count_sql = "(select count(*) from `".$order_table."` as pt3 where pt3.user_id = t.user_id)";
         
-        #dishlist
-        $dishlist_sql = "(SELECT GROUP_CONCAT(SUBSTRING(pt5.`title`,1,25) SEPARATOR '... ') FROM gs_order_dish as pt4 inner join gs_dish as pt5 ON pt5.id=pt4.dish_id WHERE pt4.`order_id`=t.id)";
+        #productlist
+        $productlist_sql = "(SELECT GROUP_CONCAT(SUBSTRING(pt5.`title`,1,25) SEPARATOR '... ') FROM gs_order_product as pt4 inner join gs_product as pt5 ON pt5.id=pt4.product_id WHERE pt4.`order_id`=t.id)";
         
         #drinklist
         $drinklist_sql = "(SELECT GROUP_CONCAT(SUBSTRING(pt7.`title`,1,25) SEPARATOR '... ') FROM gs_order_drink as pt6 inner join gs_drink as pt7 ON pt7.id=pt6.drink_id WHERE pt6.`order_id`=t.id)";
@@ -171,14 +171,14 @@ class Order extends BaseActiveRecord
         $criteria->select = array(
         '*',
         $drinklist_sql . " as drinklist",
-        $dishlist_sql . " as dishlist",
+        $productlist_sql . " as productlist",
         $order_count_sql . " as order_count",
-        $dish_count_sql . " as dish_count",
+        $product_count_sql . " as product_count",
         $drink_count_sql . " as drink_count",
         );
-        $criteria->compare($dishlist_sql, $this->dishlist,true);
+        $criteria->compare($productlist_sql, $this->productlist,true);
         $criteria->compare($drinklist_sql, $this->drinklist,true);
-        $criteria->compare($dish_count_sql, $this->dish_count);
+        $criteria->compare($product_count_sql, $this->product_count);
         $criteria->compare($drink_count_sql, $this->drink_count);
         $criteria->compare($order_count_sql, $this->order_count);
         

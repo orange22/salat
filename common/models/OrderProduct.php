@@ -5,17 +5,12 @@
  * The followings are the available columns in table '{{order_product}}':
  * @property integer $id
  * @property integer $order_id
- * @property integer $product_pid
- * @property string $title
- * @property string $code
- * @property integer $quantity
- * @property string $price
- * @property string $discount
- * @property string $size
+ * @property integer $product_id
+ * @property string $quantity
  *
  * @method OrderProduct active
  * @method OrderProduct cache($duration = null, $dependency = null, $queryCount = 1)
- * @method OrderProduct indexed($column = 'language_id')
+ * @method OrderProduct indexed($column = 'id')
  * @method OrderProduct language($lang = null)
  * @method OrderProduct select($columns = '*')
  * @method OrderProduct limit($limit, $offset = 0)
@@ -25,19 +20,8 @@
  * @property Product $product
  * @property Order $order
  */
-class OrderProduct extends LangActiveRecord
+class OrderProduct extends BaseActiveRecord
 {
-    public function fixedAttributes()
-    {
-        return CMap::mergeArray(parent::fixedAttributes(), array(
-            'order_id',
-            'product_pid',
-            'quantity',
-            'price',
-            'discount',
-            'size',
-        ));
-    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -48,7 +32,7 @@ class OrderProduct extends LangActiveRecord
     {
         return parent::model($className);
     }
-
+	
     /**
      * @return string the associated database table name
      */
@@ -63,16 +47,13 @@ class OrderProduct extends LangActiveRecord
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('order_id', 'required'),
-            array('order_id, product_pid, quantity', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 256),
-            array('price, discount', 'length', 'max' => 15),
-            array('size', 'length', 'max' => 6),
-            array('code', 'safe'),
+            array('order_id, product_id, quantity', 'required'),
+            array('order_id, product_id', 'numerical', 'integerOnly' => true),
+            array('quantity', 'length', 'max' => 10),
             array('order_id', 'exist', 'className' => 'Order', 'attributeName' => 'id'),
-            array('product_pid', 'exist', 'className' => 'Product', 'attributeName' => 'pid'),
-
-            array('id, order_id, product_pid, title, code, quantity, price, discount, size', 'safe', 'on' => 'search'),
+            array('product_id', 'exist', 'className' => 'Prod', 'attributeName' => 'id'),
+        
+            array('id, order_id, product_id, quantity', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -82,7 +63,7 @@ class OrderProduct extends LangActiveRecord
     public function relations()
     {
         return array(
-            'product' => array(self::BELONGS_TO, 'Product', array('language_id' => 'language_id', 'product_pid' => 'pid')),
+            'product' => array(self::BELONGS_TO, 'Prod', 'product_id'),
             'order' => array(self::BELONGS_TO, 'Order', 'order_id'),
         );
     }
@@ -95,13 +76,8 @@ class OrderProduct extends LangActiveRecord
         return array(
             'id' => 'ID',
             'order_id' => Yii::t('backend', 'Order'),
-            'product_pid' => Yii::t('backend', 'Product'),
-            'title' => Yii::t('backend', 'Title'),
-            'code' => Yii::t('backend', 'Code'),
+            'product_id' => Yii::t('backend', 'Product'),
             'quantity' => Yii::t('backend', 'Quantity'),
-            'price' => Yii::t('backend', 'Price'),
-            'discount' => Yii::t('backend', 'Discount'),
-            'size' => Yii::t('backend', 'Size'),
         );
     }
 
@@ -113,18 +89,78 @@ class OrderProduct extends LangActiveRecord
     {
         $criteria = new CDbCriteria;
 
-        $criteria->compare('t.id',$this->id);
+        		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.order_id',$this->order_id);
-		$criteria->compare('t.product_pid',$this->product_pid);
-		$criteria->compare('t.title',$this->title,true);
-		$criteria->compare('t.code',$this->code,true);
-		$criteria->compare('t.quantity',$this->quantity);
-		$criteria->compare('t.price',$this->price,true);
-		$criteria->compare('t.discount',$this->discount,true);
-		$criteria->compare('t.size',$this->size,true);
+		$criteria->compare('t.product_id',$this->product_id);
+		$criteria->compare('t.quantity',$this->quantity,true);
 
 		$criteria->with = array('product', 'order');
 
         return parent::searchInit($criteria);
+    }
+    public function updateForOrder($id, $newData = array())
+    {
+        $buff = array();
+        // rid of possibly duplicated size quantitys, use last one
+
+        foreach($newData as $item)
+            if((int)$item['quantity']>0)
+                $buff[(int)$item['product_id']] = $item['quantity'];
+
+        $newData = $buff;
+
+        if(empty($newData))
+            return self::model()->deleteAllByAttributes(array('order_id' => $id));
+
+
+
+        $o = 0;
+        $delete = array();
+
+        // update existing product info with new quantities, prices
+        /** @var $curData ProductInfo[] */
+        $curData = self::model()->findAllByAttributes(array('order_id' => $id));
+        foreach($curData as $item)
+        {
+            if(!isset($newData[$item['product_id']]))
+            {
+                $delete[] = $item['product_id'];
+                continue;
+            }
+
+            /*
+            if((int)$newData[$item['size']]['quantity'] === (int)$item->quantity && (int)$newData[$item['size']]['price'] === (int)$item->price)
+                        {
+                            unset($newData[$item['size']]);
+                            continue;
+                        }*/
+
+            if((int)$newData[$item['product_id']]>0){
+                $item->quantity = (int)$newData[$item['product_id']];
+                $item->update(array('quantity', ));
+                unset($newData[$item['product_id']]);
+                ++$o;
+            }
+        }
+
+        // delete info
+        self::model()->deleteAllByAttributes(array('order_id' => $id, 'product_id' => $delete));
+
+        // add new info
+        $model = new self();
+        foreach($newData as $product_id => $quantity)
+        {
+            $model->order_id = $id;
+            $model->product_id = $product_id;
+            $model->quantity = $quantity;
+            if($model->save(false))
+            {
+                ++$o;
+                $model->id = null;
+                $model->setIsNewRecord(true);
+            }
+        }
+
+        return $o;
     }
 }

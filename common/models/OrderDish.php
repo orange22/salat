@@ -22,7 +22,7 @@
  */
 class OrderDish extends BaseActiveRecord
 {
-	 public function updateForOrder($id, $newData = array())
+	public function updateForOrder($id, $newData = array())
     {
         $buff = array();
         // rid of possibly duplicated size quantitys, use last one

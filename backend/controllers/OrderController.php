@@ -161,19 +161,19 @@ class OrderController extends BackController
 				}	*/
 		
 			
-		if(isset($_POST['OrderDish']))
+		if(isset($_POST['OrderProduct']))
         {
             $hasErrors = false;
-            $psModel = new OrderDish();
-            $OrderDishData = $_POST['OrderDish'];
-            foreach($OrderDishData as $idx => $item)
+            $psModel = new OrderProduct();
+            $OrderProductData = $_POST['OrderProduct'];
+            foreach($OrderProductData as $idx => $item)
             {
-                if($item['dish_id']>0 && $item['quantity']>0){
+                if($item['product_id']>0 && $item['quantity']>0){
 					
-	                $psModel->dish_id = $item['dish_id'];
+	                $psModel->product_id = $item['product_id'];
 	                $psModel->quantity = $item['quantity'];
 	
-	                if(!$psModel->validate(array('dish_id', 'quantity', )))
+	                if(!$psModel->validate(array('product_id', 'quantity', )))
 	                {
 	                    $hasErrors = true;
 	                    user()->addFlash(
@@ -184,50 +184,18 @@ class OrderController extends BackController
 	                }
                 }
                /*
-                if(!(int)$item['dish_id'] && !(float)$item['quantity'] )
-                                   unset($OrderDishData[$idx]);*/
+                if(!(int)$item['product_id'] && !(float)$item['quantity'] )
+                                   unset($OrderProductData[$idx]);*/
                
             }
 
           	 if(!$hasErrors)
-                OrderDish::model()->updateForOrder($model->id, $OrderDishData); 
+                OrderProduct::model()->updateForOrder($model->id, $OrderProductData);
         }else{
-        	 OrderDish::model()->updateForOrder($model->id, array());
+        	 OrderProduct::model()->updateForOrder($model->id, array());
         }
-		
-		if(isset($_POST['OrderDrink']))
-        {
-            $hasErrors = false;
-            $psModel = new OrderDrink();
-            $OrderDrinkData = $_POST['OrderDrink'];
-            foreach($OrderDrinkData as $idx => $item)
-            {
-                	
-				 if($item['drink_id']>0 && $item['quantity']>0){	
-	                $psModel->drink_id = $item['drink_id'];
-	                $psModel->quantity = $item['quantity'];
-	
-	                if(!$psModel->validate(array('drink_id', 'quantity', )))
-	                {
-	                    $hasErrors = true;
-	                    user()->addFlash(
-	                        'error',
-	                        $this->renderPartial('//inc/_model_errors', array('data' => $psModel->stringifyAttributeErrors()), true)
-	                    );
-	                    continue;
-	                }
-	               /*
-	                if(!(int)$item['drink_id'] && !(float)$item['quantity'] )
-	                                   unset($OrderDishData[$idx]);*/
-				 }
-            }
 
-          	 if(!$hasErrors)
-                OrderDrink::model()->updateForOrder($model->id, $OrderDrinkData); 
-        }else{
-        	 OrderDrink::model()->updateForOrder($model->id, array());
-        }
-		$discount=0;
+        $discount=0;
         if($user->discount>0){
             $discount=$user->discount;
         }elseif($user->discount<1 && $_POST['Order']['discount_id']>0){
@@ -255,31 +223,6 @@ class OrderController extends BackController
             }
 
         }*/
-        if(isset($_POST['CharityOrder']))
-        {
-            $hasErrors = false;
-            $psModel = new CharityOrder();
-            $CharityOrderData = $_POST['CharityOrder'];
-            foreach($CharityOrderData as $item)
-            {
-                    $psModel->charity_id = $item;
-                    if(!$psModel->validate(array('charity_id')))
-                    {
-                        $hasErrors = true;
-                        user()->addFlash(
-                            'error',
-                            $this->renderPartial('//inc/_model_errors', array('data' => $psModel->stringifyAttributeErrors()), true)
-                        );
-                        continue;
-                    }
-
-            }
-
-            if(!$hasErrors)
-                CharityOrder::model()->updateForOrder($model->id, $CharityOrderData);
-        }else{
-            CharityOrder::model()->updateForOrder($model->id, array());
-        }
 
 
 
@@ -287,12 +230,12 @@ class OrderController extends BackController
 
 		$sql='
 			SELECT SUM(total) FROM ((SELECT 
-			SUM(gs_order_dish.`quantity`*gs_dish.price)*'.$discount.' AS `total`
+			SUM(gs_order_product.`quantity`*gs_dish.price)*'.$discount.' AS `total`
 			FROM
-			  gs_order_dish
+			  gs_order_product
 			INNER JOIN gs_dish
-			ON gs_dish.id=gs_order_dish.`dish_id`
-			WHERE gs_order_dish.`order_id`='.$model->id.')
+			ON gs_dish.id=gs_order_product.`product_id`
+			WHERE gs_order_product.`order_id`='.$model->id.')
 			UNION ALL
 			(SELECT SUM(gs_charity.value) AS `total` FROM gs_charity_order INNER JOIN gs_charity ON gs_charity.id=gs_charity_order.charity_id WHERE gs_charity_order.order_id='.$model->id.')
 			UNION ALL

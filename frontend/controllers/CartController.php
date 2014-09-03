@@ -18,6 +18,25 @@ class CartController extends FrontController
         $this->render('index',array('orders'=>$this->cart->getPositions(),'total'=>$this->cart->getCost()));
 	}
 
+    public function actionOrder()
+    {
+        $model=new OrderForm();
+        $model->attributes = $_POST;
+        $model->orders = $this->cart->getPositions();
+        if($model->validate()){
+            if($model->save())
+                $this->cart->clear();
+            $this->redirect('/');
+        }
+        else
+            $this->redirect('/cart/');
+    }
+
+    public function actionSuccess()
+    {
+        $this->render('/site/text',array('message'=>'Ваш заказ успешно принят!'));
+    }
+
     public function actionAdd()
     {
         $productForm = new ProductForm();

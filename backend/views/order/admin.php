@@ -84,7 +84,7 @@ $this->breadcrumbs = array(
                 'value' => '$data->user ? $data->user->email : null',
                 'filter' => CHtml::listData(User::model()->sort('t.email asc')->findAll(), 'id', 'email'),
             ),
-            'camefrom',
+           /* 'camefrom',*/
             array(
             'name' => 'orderstate_id',
             'value' => '$data->orderstate_id>0 ? $data->orderstate->title : null',
@@ -92,21 +92,21 @@ $this->breadcrumbs = array(
             ),
 
             'order_count',
-            'dish_count',
+            'product_count',
             array(
-                'name'=>'dishlist',
-                'value'=>'$data->dishlist',
+                'name'=>'productlist',
+                'value'=>'$data->productlist',
                 ),
-            'drink_count',
+           /* 'drink_count',
             array(
                 'name'=>'drinklist',
                 'value'=>'$data->drinklist',
-                ),
+                ),*/
             'name',
-            'title',
+            /*'title',*/
             'phone',
             'total',
-            array(
+            /*array(
                 'value'=>'(isset($data->orderCharities[0]->charity->value))?$data->orderCharities[0]->charity->value:0',
                 'htmlOptions'=>array('style'=>'color:red'),
             ),
@@ -115,7 +115,7 @@ $this->breadcrumbs = array(
                 'value' => 'implode(" - ",array($data->delivery_from,$data->delivery_till))',
                 'filter' => ''
                 ),
-            'delivery_addr',
+            'delivery_addr',*/
 
              array(
                 'name'=>'date_create',
