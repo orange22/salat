@@ -30,14 +30,17 @@ class OrderForm extends CFormModel
             array('name, phone, address, detail_text, orders', 'safe'),
         );
     }
-    public function save()
+    public function save($cart)
     {
+        $table='';
+        $total=$cart->getCost();
+        #Check User
         $user = User::model()->findByAttributes(array(
             'email' => $this->email
         ));
-        if(isset($user)){
 
-        }else{
+        #Create User
+        if(!isset($user)){
             $password=User::randomPassword();
             $user = new User;
             $user->email=$_POST['email'];
@@ -49,21 +52,57 @@ class OrderForm extends CFormModel
             $user->save();
         }
 
+        #Create Order
         $orderModel=new Order();
         $orderModel->user_id=$user->id;
         $orderModel->phone=$this->phone;
         $orderModel->delivery_addr=$this->address;
         $orderModel->comment=$this->detail_text;
+        $orderModel->total=$total;
         $orderModel->save();
 
         if($orderModel->id){
+            $cnt=1;
             foreach($this->orders as $order){
                 $orderProduct=new OrderProduct();
                 $orderProduct->quantity=$order->quantity;
                 $orderProduct->order_id=$orderModel->id;
                 $orderProduct->product_id=$order->id;
                 $orderProduct->save();
+                $table.='<tr><td>'.$cnt.'</td><td>'.$order->title.'</td><td>'.$order->quantity.'</td><td>'.$order->price.'</td><td>'.$order->price*$order->quantity.' грн</td></tr>';
+                $cnt++;
             }
+
+            #Сообщение покупателю
+            $message = new YiiMailMessage;
+
+            $message_body='
+			Здравствуйте!<br><br>
+			Спасибо, что сделали заказ на сайте '.$_SERVER['HTTP_HOST'].'.<br><br>
+			Ваш заказ №'.$orderModel->id.':<br><br>
+			<table border="1">
+			<tr><td>№</td><td>Название</td><td>Количество</td><td>Цена за шт.</td><td>Цена всего</td></tr>
+			'.$table.'
+			<tr><td colspan="3"></td><td>Всего:</td><td>'.$total.' грн</td></tr>
+			</table><br><br>
+			Ваши данные:<br><br>
+			Имя: '.$user->name.'<br>
+			Телефон: '.$user->phone.'<br>
+			Адрес доставки: '.$user->address.'<br>
+
+			В течение 10 минут наш менеджер вам перезвонит.<br><br>
+
+			Наш телефон: '.Option::getOpt('mainphone').'<br><br>
+			С уважением,<br>
+			Салатник';
+            $message->setBody($message_body, 'text/html');
+            $message->subject = 'Салатник ваш заказ принял';
+            $message->addTo($user->email);
+            $message->from = array(Yii::app()->params['adminEmail']=>'Салатник');
+            echo Yii::app()->mail->send($message);
+
+
+
         }
        return $orderModel;
     }

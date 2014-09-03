@@ -15,7 +15,7 @@
                             <div class="name">{{ product.title|escape }}</div>
                         </div>
                     </div>
-                    <a href="#" class="buy-btn">Заказать</a>
+                    <a href="/cart/add/{{ product.id }}" class="buy-btn">Заказать</a>
                 </li>
                 {% endfor %}
             </ul>

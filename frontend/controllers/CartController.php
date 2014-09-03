@@ -24,7 +24,9 @@ class CartController extends FrontController
         $model->attributes = $_POST;
         $model->orders = $this->cart->getPositions();
         if($model->validate()){
-            if($model->save())
+
+            //$total=$this->cart->getCost()
+            if($model->save($this->cart))
                 $this->cart->clear();
             $this->redirect('/');
         }
