@@ -19,7 +19,9 @@ $config = array(
         'common.extensions.lightopenid.*',
         'common.extensions.yii-eauth.*',
         'common.extensions.yii-eauth.services.*',
-    ),
+        'common.extensions.shopping-cart.*',
+
+),
     'modules' => array(
         'rights' => array(
             'class' => 'common.modules.rights.RightsModule',
@@ -98,7 +100,7 @@ $config = array(
         // relative to Yii::app()->basePath/..
         'webRoot' => 'salatnyk.com.ua',
         'adminEmail' => 'info@lpovar.com.ua',
-        'cacheDuration' => 3600,
+        'cacheDuration' => 0,
         'uploadUrl' => 'upload',
     ),
 );

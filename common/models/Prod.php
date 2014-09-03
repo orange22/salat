@@ -26,9 +26,38 @@
  * @property Category $category
  * @property File $image
  */
-class Prod extends BaseActiveRecord
+class Prod extends BaseActiveRecord implements IECartPosition
 {
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    public function fetchCartItems($productData)
+    {
+        /** @var $products Product[] */
+        $products = self::model()->active()->indexed('id')->findAllByAttributes(array(
+            'id' => array_keys($productData)
+        ));
+        /** @var $info ProductInfo[] */
+        //$info = ProductInfo::model()->findAllByAttributes(array('id' => array_keys($infoData)));
+
+        $o = array();
+        foreach($products as $item)
+        {
+            /** @var $model Product */
+            $model = clone $products[$item->id];
+            //$model->setExactInfo($item);
+            $o[] = $model;
+        }
+
+        return $o;
+    }
     public function behaviors()
     {
         return array(

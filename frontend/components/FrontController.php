@@ -20,6 +20,8 @@ abstract class FrontController extends CController
     public $page = 0;
 
     public $categories = array();
+
+    public $cart = array();
     /**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -31,15 +33,17 @@ abstract class FrontController extends CController
      *
      * @var string
      */
+
     protected $modelName = null;
 	const PAGE_SIZE = 10;
+
     public function init()
     {
         parent::init();
-
+        $this->cart = $this->getCart();
         $this->categories=Category::model()->sort()->active()->findAll();
-
 	    $this->setModelName(ucfirst($this->getId()));
+
     }
     public function behaviors()
     {
@@ -512,6 +516,6 @@ abstract class FrontController extends CController
      */
     protected function getCart()
     {
-        return Cart::getCart(array('model' => Dish::model()));
+        return Cart::getCart(array('model' => Prod::model()));
     }
 }

@@ -7,11 +7,11 @@ $config = array(
             'username' => 'u_salatnyk',
             'password' => 'EuG9Rv3z',
         ),
-        'cache' => array(
+        /*'cache' => array(
             'class' => 'system.caching.CFileCache',
             'keyPrefix' => 'default',
             'cachePath' => Yii::getPathOfAlias('common.runtime.cache')
-        ),
+        ),*/
     ),
     'params' => array(
         'noreply' => 'no-reply@lpovar.com.ua',

@@ -1,0 +1,32 @@
+{% extends '/views/layouts/column.twig' %}
+
+{% block content %}
+        <div class="container">
+            <div class="order-box">
+                <ul class="order-list">
+                {% for order in orders %}
+                    <li>
+                        <div class="img-holder">
+                            {{ order.thumb|image }}
+                        </div>
+                        <div class="description">
+                            <div class="name">{{ order.title }}</div>
+                            <a href="/cart/delete/{{ order.id }}" class="cancel">Отмена</a>
+                        </div>
+                        <div class="num">{{ order.quantity }} <span>порция</span></div>
+                        <div class="num">{{ order.price }} <span>грн</span></div>
+                    </li>
+                 {% endfor %}
+                </ul>
+                <div class="total-box">
+                    <div class="title">сумма заказа</div>
+                    <div class="price">
+                        <strong>{{ total }}</strong>
+                        <span>гривен</span>
+                    </div>
+                    <a href="#" class="ready send-msg-popup-opener">готово!</a>
+                </div>
+            </div>
+
+        </div>
+{% endblock %}
