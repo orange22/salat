@@ -28,7 +28,7 @@ class CartController extends FrontController
             //$total=$this->cart->getCost()
             if($model->save($this->cart))
                 $this->cart->clear();
-            $this->redirect('/');
+            $this->redirect('/cart/success');
         }
         else
             $this->redirect('/cart/');

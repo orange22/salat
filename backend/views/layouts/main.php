@@ -34,7 +34,11 @@ $cs->registerCssFile($baseUrl.'/backend/css/main.css?v=1', 'screen');
             array(
                 'class' => 'TbMenu',
                 'items' => array(
-
+                    array('label' => Yii::t('backend', 'Orders'),
+                        'url' => array('/order'),
+                        'visible' => user()->checkAccess('Order.*'),
+                        'active' => $this->getId() === 'order',
+                    ),
                     array('label' => Yii::t('backend', 'Categories'),
                         'url' => array('/category'),
                         'visible' => user()->checkAccess('Category.*'),
