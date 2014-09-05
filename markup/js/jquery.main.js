@@ -14,11 +14,33 @@ $(document).ready(function(){
 		"popup":".popup",
 		"close_btn":".close"
 	});
-	$('#nav').onePageNav({
-		currentClass: 'active',
-		changeHash: false,
-		scrollSpeed: 400,
-		scrollOffset: 70
+	$('.custom-form').validate({
+		rules: {
+			name: {
+				required: true,
+				minlength: 3
+			},
+			address: {
+				required: true,
+				minlength: 3
+			},
+			code: {
+				required: true,
+				minlength: 3,
+				maxlength: 3,
+				number: true
+			},
+			phone: {
+				required: true,
+				minlength: 7,
+				maxlength: 7,
+				number: true
+			},
+			text: {
+				required: true,
+				minlength: 3
+			}
+		}
 	});
 });
 jQuery.fn.galleryScroll = function(_options){

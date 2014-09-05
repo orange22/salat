@@ -5,27 +5,30 @@
 	<title>Салатник</title>
 	<link rel="stylesheet" href="css/all.css" type="text/css" />
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
 	<script type="text/javascript" src="js/jquery.main.js"></script>
 	<!--[if lte IE 8]><script type="text/javascript" src="js/ie.js"></script><![endif]-->
 </head>
 <body>
 	<div id="wrapper">
 		<header id="header" class="">
-			<div class="container clear">
-				<strong class="logo"><a href="#">Салатник</a></strong>
-				<div class="header-frame">
-					<nav id="nav">
-						<ul class="nav">
-							<li class="active"><a href="#">салаты</a></li>
-							<li><a href="#">супы</a></li>
-							<li><a href="#">напитки</a></li>
-							<li><a href="#">десерты</a></li>
-							<li><a href="#">Замороженный йогурт</a></li>
-							<li><a href="#">карта доставки</a></li>
-							<li class="basket"><a href="#">корзина</a></li>
-						</ul>
-					</nav>
-					<div class="phone">(044) 123-45-67</div>
+			<div class="container">
+				<div class="clear">
+					<strong class="logo"><a href="#">Салатник</a></strong>
+					<div class="header-frame">
+						<nav id="nav">
+							<ul class="nav">
+								<li class="active"><a href="#">салаты</a></li>
+								<li><a href="#">супы</a></li>
+								<li><a href="#">напитки</a></li>
+								<li><a href="#">десерты</a></li>
+								<li><a href="#">Замороженный йогурт</a></li>
+								<li><a href="#">карта доставки</a></li>
+							</ul>
+							<div href="#" class="basket"><a href="#">корзина</a></div>
+						</nav>
+						<div class="phone">(044) 123-45-67</div>
+					</div>
 				</div>
 			</div>
 		</header>
@@ -98,17 +101,19 @@
 		</div>
 	</div>
 	<footer id="footer">
-		<div class="container clear footer-frame">
-			<strong class="footer-logo"><a href="#">Салатник</a></strong>
-			<div class="contacts">
-				<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
-				<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
-				<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
+		<div class="container">
+			<div class="clear footer-frame">
+				<strong class="footer-logo"><a href="#">Салатник</a></strong>
+				<div class="contacts">
+					<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
+					<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
+					<div class="col">Киев, ул. Крещатик, 1а <br>работаем 10-22:00</div>
+				</div>
+				<ul class="social-list">
+					<li><a href="#"><img src="images/ico02.png" width="17" height="17" alt="image description" /></a></li>
+					<li><a href="#"><img src="images/ico03.png" width="17" height="17" alt="image description" /></a></li>
+				</ul>
 			</div>
-			<ul class="social-list">
-				<li><a href="#"><img src="images/ico02.png" width="17" height="17" alt="image description" /></a></li>
-				<li><a href="#"><img src="images/ico03.png" width="17" height="17" alt="image description" /></a></li>
-			</ul>
 		</div>
 	</footer>
 	<div id="send-msg-popup" class="popup-holder">
@@ -118,22 +123,29 @@
 				<fieldset>
 					<div class="row">
 						<label class="input-holder">
-							<input type="text" placeholder="Имя">
+							<input name="name" type="text" placeholder="Имя">
 						</label>
 					</div>
 					<div class="row">
-						<label class="input-holder">
-							<input type="text" placeholder="Тефелон">
-						</label>
+						<div class="code-col">
+							<label class="input-holder">
+								<input name="code" type="text" placeholder="Код" maxlength="3">
+							</label>
+						</div>
+						<div class="phone-col">
+							<label class="input-holder">
+								<input name="phone" type="text" placeholder="Телефон" maxlength="7">
+							</label>
+						</div>
 					</div>
 					<div class="row">
 						<label class="input-holder">
-							<input type="text" placeholder="Адрес">
+							<input name="address" type="text" placeholder="Адрес">
 						</label>
 					</div>
 					<div class="row">
 						<label class="textarea-holder">
-							<textarea cols="30" rows="5" placeholder="Примечание"></textarea>
+							<textarea name="text" cols="30" rows="5" placeholder="Примечание"></textarea>
 						</label>
 					</div>
 					<div class="btn-holder clear">
