@@ -40,6 +40,7 @@ $config = array(
                     'baseUrl' => '/',
                     'js' => array_filter(array(
                         'js/jquery-1.10.2.min.js',
+                        'js/jquery.validate.js',
                         'js/jquery.scrollTo.js',
                         'js/jquery.nav.js',
                         'js/jquery.main.js'
