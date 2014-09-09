@@ -68,14 +68,14 @@ class Product extends BaseActiveRecord
     {
         return array_merge(parent::rules(), array(
             array('title', 'required'),
-            array('category_id, weight, sort, status', 'numerical', 'integerOnly' => true),
+            array('category_id, weight, sort, status, twin', 'numerical', 'integerOnly' => true),
             array('price', 'numerical'),
             array('title', 'length', 'max' => 255),
             array('image_id, detail_text, date_create', 'safe'),
             array('image_id', 'file', 'types' => File::getAllowedExtensions(), 'allowEmpty' => true, 'on' => 'upload'),
             array('category_id', 'exist', 'className' => 'Category', 'attributeName' => 'id'),
         
-            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status', 'safe', 'on' => 'search'),
+            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status, twin', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -105,6 +105,7 @@ class Product extends BaseActiveRecord
             'weight' => Yii::t('backend', 'Weight'),
             'date_create' => Yii::t('backend', 'Date Create'),
             'sort' => Yii::t('backend', 'Sort'),
+            'twin' => Yii::t('backend', 'Twin'),
             'status' => Yii::t('backend', 'Status'),
         );
     }
@@ -125,6 +126,7 @@ class Product extends BaseActiveRecord
 		$criteria->compare('t.price',$this->price);
 		$criteria->compare('t.weight',$this->weight);
 		$criteria->compare('t.date_create',$this->date_create,true);
+        $criteria->compare('t.twin',$this->twin);
 		$criteria->compare('t.sort',$this->sort);
 		$criteria->compare('t.status',$this->status);
 

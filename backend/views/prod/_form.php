@@ -26,6 +26,7 @@
     <?php echo $form->textFieldRow($model, 'price', array('class' => 'span9')); ?>
     <?php echo $form->textFieldRow($model, 'weight', array('class' => 'span9')); ?>
     <?php echo $form->textFieldRow($model, 'sort', array('class' => 'span2')); ?>
+    <?php echo $form->checkBoxRow($model, 'twin'); ?>
     <?php echo $form->checkBoxRow($model, 'status'); ?>
 
 <?php $this->endWidget(); ?>

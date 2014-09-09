@@ -98,14 +98,14 @@ class Prod extends BaseActiveRecord implements IECartPosition
     {
         return array_merge(parent::rules(), array(
             array('title', 'required'),
-            array('category_id, weight, sort, status', 'numerical', 'integerOnly' => true),
+            array('category_id, weight, twin, sort, status', 'numerical', 'integerOnly' => true),
             array('price', 'numerical'),
             array('title', 'length', 'max' => 255),
             array('image_id, thumb_id, detail_text, date_create', 'safe'),
             array('image_id, thumb_id', 'file', 'types' => File::getAllowedExtensions(), 'allowEmpty' => true, 'on' => 'upload'),
             array('category_id', 'exist', 'className' => 'Category', 'attributeName' => 'id'),
         
-            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status', 'safe', 'on' => 'search'),
+            array('id, title, category_id, image_id, detail_text, price, weight, date_create, sort, status, twin', 'safe', 'on' => 'search'),
         ));
     }
 
@@ -137,6 +137,7 @@ class Prod extends BaseActiveRecord implements IECartPosition
             'date_create' => Yii::t('backend', 'Date Create'),
             'sort' => Yii::t('backend', 'Sort'),
             'status' => Yii::t('backend', 'Status'),
+            'twin' => Yii::t('backend', 'Twin'),
         );
     }
 
@@ -158,6 +159,7 @@ class Prod extends BaseActiveRecord implements IECartPosition
 		$criteria->compare('t.date_create',$this->date_create,true);
 		$criteria->compare('t.sort',$this->sort);
 		$criteria->compare('t.status',$this->status);
+        $criteria->compare('t.status',$this->twin);
 
 		$criteria->with = array('category');
 
