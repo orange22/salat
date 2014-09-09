@@ -815,3 +815,33 @@ dialog {
 .error label.error {
 	display: none !important;
 }
+.description-slide-list {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.description-slide {
+	display: none;
+}
+.description-slide.active{
+	display: block;
+}
+.item-box .description-slide .item {
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+.item-box .description-slide .item + .item {
+	margin-left: 460px;
+}
+
+
+
+
+
+
+
+
+
+
+
