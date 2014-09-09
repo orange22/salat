@@ -65,7 +65,9 @@
                                                 <p>{{ product.detail_text }}</p>
                                             </div>
                                         </div>
-                                        <a href="/cart/add/{{ product.id }}" class="buy-btn">Заказать</a>
+                                        {% if product['price'] %}
+                                            <a href="/cart/add/{{ product.id }}" class="buy-btn">Заказать</a>
+                                        {% endif %}
                                     </li>
                                 {% endif %}
                                 {% if twins|length==2 %}
@@ -82,7 +84,9 @@
                                                     <p>{{ twin.detail_text }}</p>
                                                 </div>
                                             </div>
-                                            <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                            {% if twin['price'] %}
+                                                <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                            {% endif %}
                                        </div>
                                        {% endfor %}
                                     </li>
@@ -101,7 +105,9 @@
                                                     <p>{{ twin.detail_text }}</p>
                                                 </div>
                                             </div>
+                                            {% if twin['price'] %}
                                             <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
                                 {% endif %}
