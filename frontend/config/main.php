@@ -32,7 +32,8 @@ $config = array(
         'clientScript' => array(
             'class' => 'common.components.ClientScript',
             'wwwPath' => Yii::getPathOfAlias('salatnyk.com.ua'),
-            'cacheTime' => 3600 * 24,
+            //'cacheTime' => 3600 * 24,
+            'cacheTime' => 0,
             'scriptMap' => array(
             ),
             'packages' => array(
