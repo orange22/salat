@@ -10,44 +10,17 @@
         {% endif %}
             <div class="container">
                 <div class="item-box" id="{{ cat.code }}">
-                    <a href="#" class="prev"></a>
-                    <a href="#" class="next"></a>
+                    {% if cat.products|length>1 %}
+                        <a href="#" class="prev"></a>
+                        <a href="#" class="next"></a>
+                    {% endif %}
                     <div class="gallery-holder">
                         <ul class="slide-list">
-                            <!--<li class="slide">
-                                <div class="item">
-                                    <div class="img-holder"><img src="images/img11.jpg" width="147" height="423" alt="image description" /></div>
-                                    <div class="description">
-                                        <div class="price-col">
-                                            <div class="price">50<span>грн</span></div>
-                                            <div class="weight">300г</div>
-                                        </div>
-                                        <div class="info">
-                                            <div class="name">Апельсиновый сок</div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="buy-btn">Заказать</a>
-                                </div>
-                                <div class="item">
-                                    <div class="img-holder"><img src="images/img04.jpg" width="166" height="442" alt="image description" /></div>
-                                    <div class="description">
-                                        <div class="price-col">
-                                            <div class="price">50<span>грн</span></div>
-                                            <div class="weight">300г</div>
-                                        </div>
-                                        <div class="info">
-                                            <div class="name">Грейпфрутовый сок</div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="buy-btn">Заказать</a>
-                                </div>
-                            </li>-->
                             {% set twins = [] %}
                             {% for product in cat.products %}
-                                {{ twins.length }}
                                 {%  if product.twin %}
                                     {% set twins = twins | merge([ product ]) %}
-                                {% endif %}
+                                {% else %}
                                     <li class="slide">
                                         <div class="img-holder">
                                             {{ product.image|image }}
@@ -58,25 +31,68 @@
                                                 <div class="weight">{{ product['weight'] }} г</div>
                                             </div>
                                             <div class="info">
-                                                <div class="name">{{ twins.length }} - {{ product.title }}</div>
+                                                <div class="name">{{ product.title }}</div>
                                                 <p>{{ product.detail_text }}</p>
                                             </div>
                                         </div>
                                         <a href="/cart/add/{{ product.id }}" class="buy-btn">Заказать</a>
                                     </li>
-
-                                {% if twins.length>1 %}
+                                {% endif %}
+                                {% if twins|length==2 %}
+                                    <li class="slide">
+                                        {% for twin in twins %}
+                                            <div class="item">
+                                                <div class="img-holder">
+                                                    {{ twin.image|image }}
+                                                </div>
+                                                <div class="description">
+                                                    <div class="price-col">
+                                                        <div class="price"><span>{{ twin['price'] }} грн</span></div>
+                                                        <div class="weight">{{ twin['weight'] }} г</div>
+                                                    </div>
+                                                    <div class="info">
+                                                        <div class="name">{{ twin.title }}</div>
+                                                        <p>{{ twin.detail_text }}</p>
+                                                    </div>
+                                                </div>
+                                                <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                            </div>
+                                        {% endfor %}
+                                    </li>
+                                    {%  set twins=[] %}
+                                {% endif %}
+                                {% if loop.last and twins|length==1 %}
+                                    {% for twin in twins %}
+                                    <li class="slide">
+                                        <div class="img-holder">
+                                            {{ twin.image|image }}
+                                        </div>
+                                        <div class="description">
+                                            <div class="price-col">
+                                                <div class="price"><span>{{ twin['price'] }} грн</span></div>
+                                                <div class="weight">{{ twin['weight'] }} г</div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="name">{{ twin.title }}</div>
+                                                <p>{{ twin.detail_text }}</p>
+                                            </div>
+                                        </div>
+                                        <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                    </li>
+                                    {% endfor %}
                                 {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="switcher-box">
+                        {% if cat.products|length>1 %}
                         <div class="switcher">
                             <ul>
                                 <li class="active"><a href="#"></a></li>
                                 <li><a href="#"></a></li>
                             </ul>
                         </div>
+                        {% endif %}
                         <a href="/category/{{ cat.code }}" class="more">все {{ cat.title|lower }}</a>
                     </div>
                 </div>
