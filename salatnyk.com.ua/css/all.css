@@ -138,6 +138,7 @@ dialog {
 	margin:0;
 	padding:0;
 	list-style:none;
+	float: left;
 }
 .nav li{
 	float: left;
@@ -153,12 +154,18 @@ dialog {
 .nav .active a {
 	color: #22ab4a;
 }
-.nav .basket a {
+#nav .basket{
+	float: left;
+	text-transform: uppercase;
+}
+#nav .basket a {
 	padding: 0px 5px;
 	color: #22ab4a;
 	position: relative;
+	text-decoration: none;
+	color: #22ab4a;
 }
-.nav .basket a:after{
+#nav .basket a:after{
 	content: '';
 	position: absolute;
 	top: -3px;
@@ -759,6 +766,10 @@ dialog {
 	padding: 0 5px;
 	background: #fff;
 }
+.custom-form .textarea-holder.error,
+.custom-form .input-holder.error {
+	border-color: red;
+}
 .custom-form .textarea-holder textarea {
 	float: left;
 	width: 100%;
@@ -791,4 +802,16 @@ dialog {
 	padding: 0px 5px;
 	font-size: 16px;
 	font-family: 'plumbcondensedregular', sans-serif;
+}
+.custom-form .code-col {
+	float: left;
+	width: 40px;
+	margin: 0 10px 0 0;
+}
+.custom-form .phone-col {
+	float: left;
+	width: 100px;
+}
+.error label.error {
+	display: none !important;
 }
