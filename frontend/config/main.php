@@ -67,7 +67,7 @@ $config = array(
             'extensions' => array(
             ),
             'globals' => array(
-                'html' => 'CHtml'
+                'html' => 'CHtml',
             ),
             'functions' => array(
                 't' => 'Yii::t',
