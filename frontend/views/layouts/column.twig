@@ -3,22 +3,27 @@
 {% block wrapper %}
     <div id="wrapper">
         <div id="header">
-            <div class="container clear">
-                <strong class="logo"><a href="/">Салатник</a></strong>
-                <div class="header-frame">
-                    <nav id="nav">
-                        <ul class="nav">
-                            {% for cat in this.categories %}
-                            <li><a href="#{{ cat.code }}">{{ cat.title }}</a></li>
-                            {% endfor %}
-                            <li><a href="#map">карта доставки</a></li>
-                            <li class="basket"><a href="/cart/">корзина</a></li>
-                        </ul>
-                    </nav>
-                    <div class="phone">{{ opt('mainphone') }}</div>
+            <div class="container">
+                <div class="clear">
+
+                    <strong class="logo"><a href="/">Салатник</a></strong>
+                    <div class="header-frame">
+                        <nav id="nav">
+                            <ul class="nav">
+                                {% for cat in this.categories %}
+                                    <li><a href="#{{ cat.code }}">{{ cat.title }}</a></li>
+                                {% endfor %}
+                                <li><a href="#map">карта доставки</a></li>
+                            </ul>
+                            <div class="basket"><a  href="/cart/">корзина</a></div>
+                        </nav>
+                        <div class="phone">{{ opt('mainphone') }}</div>
+                    </div>
+
                 </div>
             </div>
         </div>
+
         <div id="main">
             {% block content %}{% endblock %}
             <div class="item-head" id="map">

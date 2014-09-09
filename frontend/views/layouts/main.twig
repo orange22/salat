@@ -9,6 +9,16 @@
     {% block ieTags %}{% endblock %}
     <link href="favicon.png" rel="icon" type="image/png" />
     <link href="favicon.png" rel="shortcut icon" type="image/png" />
+    <script>
+        $(document).ready(function(){
+            $('.nav').onePageNav({
+                currentClass: 'active',
+                changeHash: false,
+                scrollSpeed: 400,
+                scrollOffset: 70
+            });
+        }
+    </script>
 </head>
 
 <body>

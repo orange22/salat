@@ -2,14 +2,14 @@
 
 {% block content %}
     {% for cat in this.categories %}
-    {%  if cat.products %}
-        {% if not loop.first %}
-            <div class="item-head" id="{{ cat.code }}">
-                <div class="container">{{ cat.title }}</div>
-            </div>
-        {% endif %}
+        {%  if cat.products %}
+            {% if not loop.first %}
+                <div class="item-head" id="{{ cat.code }}">
+                    <div class="container">{{ cat.title }}</div>
+                </div>
+            {% endif %}
             <div class="container">
-                <div class="item-box" id="{{ cat.code }}">
+                <div class="item-box">
                     {% if cat.products|length>1 %}
                         <a href="#" class="prev"></a>
                         <a href="#" class="next"></a>
@@ -21,14 +21,44 @@
                                 {%  if product.twin %}
                                     {% set twins = twins | merge([ product ]) %}
                                 {% else %}
+                                <li class="slide">
+                                    <div class="img-holder">{{ product.image|image }}</div>
+                                </li>
+                                {% endif %}
+                                {% if twins|length==2 %}
                                     <li class="slide">
-                                        <div class="img-holder">
-                                            {{ product.image|image }}
+                                        {% for twin in twins %}
+                                        <div class="item">
+                                            <div class="img-holder">
+                                                {{ twin.image|image }}
+                                            </div>
                                         </div>
+                                        {% endfor %}
+                                     </li>
+                                    {%  set twins=[] %}
+                                {% endif %}
+                                {% if loop.last and twins|length==1 %}
+                                    {% for twin in twins %}
+                                        <li class="slide">
+                                            <div class="img-holder">{{ twin.image|image }}</div>
+                                        </li>
+                                     {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="description-gallery">
+                        <ul class="description-slide-list">
+                            {% set twins = [] %}
+                            {% for product in cat.products %}
+                                {%  if product.twin %}
+                                    {% set twins = twins | merge([ product ]) %}
+                                {% else %}
+                                    <li class="description-slide">
                                         <div class="description">
                                             <div class="price-col">
-                                                <div class="price"><span>{{ product['price'] }} грн</span></div>
-                                                <div class="weight">{{ product['weight'] }} г</div>
+                                                <div class="price"><span>{{ product['price'] }}{% if product['price'] %} грн{% endif %}</span></div>
+                                                <div class="weight">{{ product['weight'] }}{% if product['weight'] %} г{% endif %}</div>
                                             </div>
                                             <div class="info">
                                                 <div class="name">{{ product.title }}</div>
@@ -39,47 +69,51 @@
                                     </li>
                                 {% endif %}
                                 {% if twins|length==2 %}
-                                    <li class="slide">
+                                    <li class="description-slide active">
                                         {% for twin in twins %}
-                                            <div class="item">
-                                                <div class="img-holder">
-                                                    {{ twin.image|image }}
+                                        <div class="item">
+                                            <div class="description">
+                                                <div class="price-col">
+                                                    <div class="price"><span>{{ twin['price'] }}{% if twin['price'] %} грн{% endif %}</span></div>
+                                                    <div class="weight">{{ twin['weight'] }}{% if twin['weight'] %} г{% endif %}</div>
                                                 </div>
-                                                <div class="description">
-                                                    <div class="price-col">
-                                                        <div class="price"><span>{{ twin['price'] }} грн</span></div>
-                                                        <div class="weight">{{ twin['weight'] }} г</div>
-                                                    </div>
-                                                    <div class="info">
-                                                        <div class="name">{{ twin.title }}</div>
-                                                        <p>{{ twin.detail_text }}</p>
-                                                    </div>
+                                                <div class="info">
+                                                    <div class="name">{{ twin.title }}</div>
+                                                    <p>{{ twin.detail_text }}</p>
                                                 </div>
-                                                <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
                                             </div>
-                                        {% endfor %}
+                                            <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                       </div>
+                                       {% endfor %}
                                     </li>
                                     {%  set twins=[] %}
                                 {% endif %}
                                 {% if loop.last and twins|length==1 %}
                                     {% for twin in twins %}
-                                    <li class="slide">
-                                        <div class="img-holder">
-                                            {{ twin.image|image }}
-                                        </div>
-                                        <div class="description">
-                                            <div class="price-col">
-                                                <div class="price"><span>{{ twin['price'] }} грн</span></div>
-                                                <div class="weight">{{ twin['weight'] }} г</div>
+                                        <li class="description-slide">
+                                            <div class="description">
+                                                <div class="price-col">
+                                                   <div class="price"><span>{{ twin['price'] }}{% if twin['price'] %} грн{% endif %}</span></div>
+                                                   <div class="weight">{{ twin['weight'] }}{% if twin['weight'] %} г{% endif %}</div>
+                                                </div>
+                                                <div class="info">
+                                                    <div class="name">{{ twin.title }}</div>
+                                                    <p>{{ twin.detail_text }}</p>
+                                                </div>
                                             </div>
-                                            <div class="info">
-                                                <div class="name">{{ twin.title }}</div>
-                                                <p>{{ twin.detail_text }}</p>
-                                            </div>
-                                        </div>
-                                        <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
-                                    </li>
+                                            <a href="/cart/add/{{ twin.id }}" class="buy-btn">Заказать</a>
+                                        </li>
                                     {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+
+
+                            {% for product in cat.products %}
+                                {%  if product.twin %}
+                                    {% set twins = twins | merge([ product ]) %}
+                                {% else %}
+
+                                <!---->
                                 {% endif %}
                             {% endfor %}
                         </ul>
@@ -90,6 +124,7 @@
                             <ul>
                                 <li class="active"><a href="#"></a></li>
                                 <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
                             </ul>
                         </div>
                         {% endif %}
@@ -97,7 +132,102 @@
                     </div>
                 </div>
             </div>
-    {% endif %}
+            <!--<div class="item-head" id="drink">
+                <div class="container">напитки</div>
+            </div>
+            <div class="container">
+                <div class="item-box">
+                    <a href="#" class="prev"></a>
+                    <a href="#" class="next"></a>
+                    <div class="gallery-holder">
+                        <ul class="slide-list">
+                            <li class="slide">
+                                <div class="item">
+                                    <div class="img-holder"><img src="images/img11.jpg" width="147" height="423" alt="image description" /></div>
 
+                                </div>
+                                <div class="item">
+                                    <div class="img-holder"><img src="images/img04.jpg" width="166" height="442" alt="image description" /></div>
+
+                                </div>
+                            </li>
+                            <li class="slide">
+                                <div class="item">
+                                    <div class="img-holder"><img src="images/img11.jpg" width="147" height="423" alt="image description" /></div>
+                                </div>
+                                <div class="item">
+                                    <div class="img-holder"><img src="images/img04.jpg" width="166" height="442" alt="image description" /></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="description-gallery">
+                        <ul class="description-slide-list">
+                            <li class="description-slide active">
+                                <div class="item">
+                                    <div class="description">
+                                        <div class="price-col">
+                                            <div class="price">50<span>грн</span></div>
+                                            <div class="weight">300г</div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="name">Апельсиновый сок</div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="buy-btn">Заказать</a>
+                                </div>
+                                <div class="item">
+                                    <div class="description">
+                                        <div class="price-col">
+                                            <div class="price">50<span>грн</span></div>
+                                            <div class="weight">300г</div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="name">Грейпфрутовый сок</div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="buy-btn">Заказать</a>
+                                </div>
+                            </li>
+                            <li class="description-slide">
+                                <div class="item">
+                                    <div class="description">
+                                        <div class="price-col">
+                                            <div class="price">50<span>грн</span></div>
+                                            <div class="weight">300г</div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="name">Апельсиновый сок</div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="buy-btn">Заказать</a>
+                                </div>
+                                <div class="item">
+                                    <div class="description">
+                                        <div class="price-col">
+                                            <div class="price">50<span>грн</span></div>
+                                            <div class="weight">300г</div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="name">Грейпфрутовый сок</div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="buy-btn">Заказать</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="switcher-box">
+                        <div class="switcher">
+                            <ul>
+                                <li class="active"><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="more">все напитки</a>
+                    </div>
+                </div>
+            </div>-->
+            {% endif %}
     {% endfor %}
 {% endblock %}
