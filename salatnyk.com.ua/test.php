@@ -1,5 +1,5 @@
 <?
-$_POST['field']='RegisterForm[email]';
-preg_match("'RegisterForm\[(\w+)\]?'", $_POST['field'], $match);
-print_r($match);
-?>
+$id=1;
+$str="str$id";
+$$str=1;
+echo $$str;
