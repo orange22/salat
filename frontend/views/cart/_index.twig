@@ -4,7 +4,7 @@
         <div class="container">
             <div class="order-box">
                 <ul class="order-list">
-                   {% for order in orders %}
+                {% for order in orders %}
                     <li>
                         <div class="img-holder">
                             {{ order.thumb|image }}
@@ -16,7 +16,7 @@
                         <div class="num">{{ order.quantity }} <span>порция</span></div>
                         <div class="num">{{ order.price }} <span>грн</span></div>
                     </li>
-                   {% endfor %}
+                 {% endfor %}
                 </ul>
                 <div class="total-box">
                     <div class="title">сумма заказа</div>
@@ -24,8 +24,9 @@
                         <strong>{{ total }}</strong>
                         <span>гривен</span>
                     </div>
-                    <a href="/" class="ready send-msg-popup-opener">готово!</a>
+                    <a href="#" class="ready send-msg-popup-opener">готово!</a>
                 </div>
             </div>
+
         </div>
 {% endblock %}
