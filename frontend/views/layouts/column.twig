@@ -22,6 +22,7 @@
                             <div class="basket"><a  href="/cart/">корзина</a></div>
                         </nav>
                         <div class="phone">{{ opt('mainphone') }}</div>
+                        <span class="info">{{ opt('workhours') }}</span>
                     </div>
 
                 </div>
@@ -44,7 +45,8 @@
             <div class="clear footer-frame">
                 <strong class="footer-logo"><a href="/">Салатник</a></strong>
                 <div class="contacts">
-                    <div class="col">{{ opt('contacts')|raw }}</div>
+                    <div class="col">{{ opt('contacts')|raw }}<br/>
+                    {{ opt('workhours') }}</div>
                 </div>
                 <ul class="social-list">
                     <li><a href="/"><img src="images/ico02.png" width="17" height="17" alt="image description" /></a></li>
