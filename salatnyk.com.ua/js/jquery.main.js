@@ -31,11 +31,10 @@ $(document).ready(function() {
 		$('.custom-form').validate({
 			rules: {
 				name: {
-					required: true,
+                    required: true,
 					minlength: 3
 				},
 				address: {
-					required: true,
 					minlength: 3
 				},
                 email: {
@@ -54,7 +53,6 @@ $(document).ready(function() {
 					number: true
 				},
 				text: {
-					required: true,
 					minlength: 3
 				}
 			}

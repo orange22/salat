@@ -37,7 +37,7 @@ class CartController extends FrontController
 
     public function actionSuccess()
     {
-        $this->render('/site/text',array('message'=>'Ваш заказ успешно принят!'));
+        $this->render('/site/text',array('message'=>'Дякуємо за замовлення, наш менеджер Вам зателефонує.'));
     }
 
     public function actionAdd()
