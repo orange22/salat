@@ -71,6 +71,7 @@ $config = array(
             ),
             'functions' => array(
                 't' => 'Yii::t',
+                'text_limit' => 'Tool::text_limit',
                 'fileUrl' => 'File::fileUrl',
                 'file' => 'File::htmlLinkFile',
                 'image' => 'File::htmlImageEx',
