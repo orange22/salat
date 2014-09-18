@@ -63,13 +63,13 @@ $(document).ready(function() {
 		if ($(this).is('.plus')) {
 			input.val((++val))
 		} else {
-			if (val == 1) {
+			/*if (val == 1) {
 				return false;
-			} else {
+			} else {*/
 				input.val((--val) + "")
-			}
+			/*}*/
 		}
-		e.preventDefault();
+		/*e.preventDefault();*/
 	});
 	$(window).load(function() {
 		if('dotdotdot' in $.fn) {

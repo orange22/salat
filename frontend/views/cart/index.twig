@@ -13,7 +13,14 @@
                             <div class="name">{{ order.title }}</div>
                             <a href="/cart/delete/{{ order.id }}" class="cancel">Отмена</a>
                         </div>
-                        <div class="num">{{ order.quantity }} <span>порция</span></div>
+                        <form action="#" class="num">
+                            <fieldset>
+                                <a href="/cart/update/{{ order.id }}/" class="minus"></a>
+                                <a href="/cart/add/{{ order.id }}/" class="plus"></a>
+                                <input disabled="disabled" maxlength="2" type="text" name="id" value="{{ order.quantity }}">
+                            </fieldset>
+                        </form>
+                        <!--<div class="num">{{ order.quantity }} <span>порция</span></div>-->
                         <div class="num">{{ order.price }} <span>грн</span></div>
                     </li>
                    {% endfor %}
