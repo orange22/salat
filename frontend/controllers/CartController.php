@@ -12,6 +12,7 @@ class CartController extends FrontController
 
     public function actionIndex()
 	{
+        $this->pageTitle="Салатник - Кошик";
         $orders=$this->cart->getPositions();
         if(!$orders)
             $this->redirect('/');

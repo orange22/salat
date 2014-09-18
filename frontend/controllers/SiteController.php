@@ -4,6 +4,7 @@ class SiteController extends FrontController
 {
     public function actionIndex()
 	{
+        $this->pageTitle='Салатник';
         //echo CHtml::ajaxLink('delete', 'delete/'.$data->id, array('type'=>'POST', 'data'=>array('YII_CSRF_TOKEN' => Yii::app()->request->csrfToken)));
         $this->render('index',array());
 	}
