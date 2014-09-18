@@ -10,6 +10,7 @@ class OrderForm extends CFormModel
     public $name;
     public $email;
     public $phone;
+    public $code;
     public $address;
     public $orders;
     public $detail_text;
@@ -25,7 +26,7 @@ class OrderForm extends CFormModel
     {
         return array(
             // username and password are required
-            array('name, phone, email', 'required'),
+            array('name, phone, code,  email', 'required'),
             // when in register scenario, password must match password2
             array('name, phone, address, detail_text, orders', 'safe'),
         );
@@ -48,7 +49,7 @@ class OrderForm extends CFormModel
             $user = new User;
             $user->email=$_POST['email'];
             $user->name=$_POST['name'];
-            $user->phone=$_POST['phone'];
+            $user->phone=$_POST['code'].' '.$_POST['phone'];
             $user->delivery_addr=$_POST['address'];
             $user->display_name=$_POST['email'];
             $user->password=$password;
@@ -58,7 +59,7 @@ class OrderForm extends CFormModel
         #Create Order
         $orderModel=new Order();
         $orderModel->user_id=$user->id;
-        $orderModel->phone=$this->phone;
+        $orderModel->phone=$this->code.' '.$this->phone;
         $orderModel->delivery_addr=$this->address;
         $orderModel->comment=$this->detail_text;
         $orderModel->total=$total;

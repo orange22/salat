@@ -38,6 +38,9 @@ $(document).ready(function() {
 					required: true,
 					minlength: 3
 				},
+                email: {
+                    required: true
+                },
 				code: {
 					required: true,
 					minlength: 3,
