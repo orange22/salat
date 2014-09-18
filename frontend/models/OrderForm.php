@@ -80,26 +80,26 @@ class OrderForm extends CFormModel
             #Сообщение покупателю
                 $message = new YiiMailMessage;
                 $message_body='
-                Здравствуйте!<br><br>
-                Спасибо, что сделали заказ на сайте '.$_SERVER['HTTP_HOST'].'.<br><br>
-                Ваш заказ №'.$orderModel->id.':<br><br>
+                Вітаємо!<br><br>
+                Дякуємо за Ваше замовлення на сайті '.$_SERVER['HTTP_HOST'].'.<br><br>
+                Ваше замовлення №'.$orderModel->id.':<br><br>
                 <table border="1">
-                <tr><td>№</td><td>Название</td><td>Количество</td><td>Цена за шт.</td><td>Цена всего</td></tr>
+                <tr><td>№</td><td>Назва</td><td>Кількість</td><td>Ціна за шт.</td><td>Ціна всього</td></tr>
                 '.$table.'
-                <tr><td colspan="3"></td><td>Всего:</td><td>'.$total.' грн</td></tr>
+                <tr><td colspan="3"></td><td>Всього:</td><td>'.$total.' грн</td></tr>
                 </table><br><br>
-                Ваши данные:<br><br>
-                Имя: '.$user->name.'<br>
+                Ваші дані:<br><br>
+                Ім&#769;я: '.$user->name.'<br>
                 Телефон: '.$user->phone.'<br>
-                Адрес доставки: '.$user->address.'<br>
+                Адреса доставки: '.$user->address.'<br>
 
-                В течение 10 минут наш менеджер вам перезвонит.<br><br>
+                Протягом 10 хвилин наш менеджер звяжеться з Вамы<br><br>
 
                 Наш телефон: '.Option::getOpt('mainphone').'<br><br>
-                С уважением,<br>
+                З повагою,<br>
                 Салатник';
                 $message->setBody($message_body, 'text/html');
-                $message->subject = 'Салатник ваш заказ принял';
+                $message->subject = 'Салатник отримав ваше замовлення';
                 $message->addTo($user->email);
                 $message->from = array(Yii::app()->params['adminEmail']=>'Салатник');
                 Yii::app()->mail->send($message);

@@ -11,7 +11,7 @@
                         </div>
                         <div class="description">
                             <div class="name">{{ order.title }}</div>
-                            <a href="/cart/delete/{{ order.id }}" class="cancel">Отмена</a>
+                            <a href="/cart/delete/{{ order.id }}" class="cancel">Відміна</a>
                         </div>
                         <form action="#" class="num">
                             <fieldset>
@@ -26,10 +26,10 @@
                    {% endfor %}
                 </ul>
                 <div class="total-box">
-                    <div class="title">сумма заказа</div>
+                    <div class="title">сума замовленна</div>
                     <div class="price">
                         <strong>{{ total }}</strong>
-                        <span>гривен</span>
+                        <span>гривень</span>
                     </div>
                     <a href="/" class="ready send-msg-popup-opener">готово!</a>
                 </div>
