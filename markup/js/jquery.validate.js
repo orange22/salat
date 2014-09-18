@@ -288,14 +288,14 @@ $.extend( $.validator, {
 			if ( element.type === "radio" ) {
 				this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
 			} else {
-				$( element ).parent().addClass( errorClass ).removeClass( validClass );
+				$( element ).addClass( errorClass ).removeClass( validClass );
 			}
 		},
 		unhighlight: function( element, errorClass, validClass ) {
 			if ( element.type === "radio" ) {
 				this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
 			} else {
-				$( element ).parent().removeClass( errorClass ).addClass( validClass );
+				$( element ).removeClass( errorClass ).addClass( validClass );
 			}
 		}
 	},

@@ -116,6 +116,11 @@ dialog {
 	border-bottom: 1px dashed #b7b7b7;
 	padding: 73px 0 12px;
 }
+.header-frame .info {
+	float: right;
+	line-height: 20px;
+	padding-right: 17px;
+}
 .logo{
 	margin:39px 0 0 1px;
 	width:96px;
@@ -626,6 +631,12 @@ dialog {
 .order-list .img-holder{
 	float: left;
 	width: 213px;
+	height: 250px;
+	line-height: 250px;
+	vertical-align: middle;
+}
+.order-list .img-holder img {
+	vertical-align: middle;
 }
 .order-list .description {
 	float: left;
@@ -638,6 +649,7 @@ dialog {
 	position: relative;
 	margin: 78px 0 0;
 	width: 143px;
+	min-height: 56px;
 }
 .order-list .description .cancel {
 	position: absolute;
@@ -648,6 +660,7 @@ dialog {
 .order-list .description .name {
 	font-size: 28px;
 	max-height: 84px;
+	height: 56px;
 	overflow: hidden;
 }
 .order-list .num {
@@ -664,6 +677,36 @@ dialog {
 	padding: 25px 0 0;
 	font-size: 28px;
 	line-height: 28px;
+}
+.order-list .num .minus,
+.order-list .num .plus {
+	float: left;
+	text-indent: -9999px;
+	overflow: hidden;
+	width: 11px;
+	height: 17px;
+	margin: 5px 0 0 10px;
+	background: url(../images/num-arrows.png) no-repeat;
+}
+.order-list .num input:disabled,
+.order-list .num input {
+	display: block;
+	overflow: hidden;
+	padding: 0;
+	border: 0;
+	font-size: 28px;
+	line-height: 32px;
+	text-align: center;
+	background: none;
+	width: 30px;
+	margin: -3px auto 0;
+	font: 28px/32px 'plumbcondensedregular', sans-serif;
+	color: #414042;
+}
+.order-list .num .plus {
+	float: right;
+	margin: 5px 10px 0 0;
+	background-position: -19px 0;
 }
 .order-list .num span {
 	font-size: 16px;
@@ -742,48 +785,49 @@ dialog {
 }
 .custom-form .input-holder{
 	display: block;
-	border: 1px solid #898989;
-	height: 19px;
-	padding: 0 5px;
+	height: 21px;
 	background: #fff;
 }
 .custom-form .input-holder input {
 	float: left;
 	width: 100%;
-	padding: 0;
-	height: 19px;
-	border: none;
+	padding: 0 5px;
+	height: 21px;
+	box-sizing: border-box;
+	border: 1px solid #898989;
 	background: none;
 	font-size: 16px;
-	line-height: 19px;
+	line-height: 21px;
 	font-family: 'plumbcondensedregular', sans-serif;
 	color: #414042;
 }
 .custom-form .textarea-holder{
 	display: block;
-	border: 1px solid #898989;
-	height: 66px;
-	padding: 0 5px;
+	height: 68px;
 	background: #fff;
 }
-.custom-form .textarea-holder.error,
-.custom-form .input-holder.error {
+.custom-form .textarea-holder .error,
+.custom-form .input-holder .error {
 	border-color: red;
 }
 .custom-form .textarea-holder textarea {
 	float: left;
 	width: 100%;
-	padding: 0;
-	height: 66px;
-	border: none;
+	padding: 0 5px;
+	height: 68px;
+	box-sizing: border-box;
+	border: 1px solid #898989;
 	background: none;
 	font-size: 16px;
-	line-height: 19px;
+	line-height: 21px;
 	font-family: 'plumbcondensedregular', sans-serif;
 	color: #414042;
 	overflow: auto;
 	resize:none;
 	margin: 0;
+}
+label.error {
+	display: none !important;
 }
 .custom-form .btn-holder{
 	padding: 8px 0 0;
@@ -811,9 +855,6 @@ dialog {
 .custom-form .phone-col {
 	float: left;
 	width: 100px;
-}
-.error label.error {
-	display: none !important;
 }
 .description-slide-list {
 	margin:0;

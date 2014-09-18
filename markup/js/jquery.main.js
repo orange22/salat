@@ -21,34 +21,61 @@ $(document).ready(function() {
 		"opener": ".send-msg-popup-opener",
 		"popup_holder": "#send-msg-popup",
 		"popup": ".popup",
-		"close_btn": ".close"
+		"close_btn": ".close",
+		"beforeOpen": function() {
+			$('.custom-form .input-holder input, .custom-form .textarea-holder textarea').val('');
+			$('.custom-form input.error, .custom-form textarea.error').removeClass('error');
+		}
 	});
-	$('.custom-form').validate({
-		rules: {
-			name: {
-				required: true,
-				minlength: 3
-			},
-			address: {
-				required: true,
-				minlength: 3
-			},
-			code: {
-				required: true,
-				minlength: 3,
-				maxlength: 3,
-				number: true
-			},
-			phone: {
-				required: true,
-				minlength: 7,
-				maxlength: 7,
-				number: true
-			},
-			text: {
-				required: true,
-				minlength: 3
+	if('validate' in $.fn) {
+		$('.custom-form').validate({
+			rules: {
+				name: {
+					required: true,
+					minlength: 3
+				},
+				address: {
+					required: true,
+					minlength: 3
+				},
+				code: {
+					required: true,
+					minlength: 3,
+					maxlength: 3,
+					number: true
+				},
+				phone: {
+					required: true,
+					minlength: 7,
+					maxlength: 7,
+					number: true
+				},
+				text: {
+					required: true,
+					minlength: 3
+				}
 			}
+		});
+	}
+	$('.num .minus, .num .plus').on('click',function(e){
+		var input = $(this).parent().find('input'),
+			val = parseInt(input.val());
+		if ($(this).is('.plus')) {
+			input.val((++val))
+		} else {
+			if (val == 1) {
+				return false;
+			} else {
+				input.val((--val) + "")
+			}
+		}
+		e.preventDefault();
+	});
+	$(window).load(function() {
+		if('dotdotdot' in $.fn) {
+			$('.order-list .description .name').dotdotdot({
+				wrap: 'letter'
+			});
 		}
 	});
 });

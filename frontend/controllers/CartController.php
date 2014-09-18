@@ -53,6 +53,22 @@ class CartController extends FrontController
             $this->cart->put($productForm->fetchproduct());
         $this->redirect('/cart/');
     }
+    public function actionUpdate()
+    {
+        $productForm = new ProductForm();
+        $productForm->attributes = $_GET;
+        if(!$productForm->validate())
+        {
+            $errors = current($productForm->getErrors());
+        }
+
+        $positions=$this->cart->getPositions();
+
+        $q=$positions[$_GET['id']]->CartPosition->quantity;
+        $position=$productForm->fetchproduct();
+            $this->cart->update($position,$q-1);
+        $this->redirect('/cart/');
+    }
     public function actionDelete($id)
     {
         $cart = $this->getCart();
